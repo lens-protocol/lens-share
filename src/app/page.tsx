@@ -1,8 +1,6 @@
 import { headers } from "next/headers";
 import { userAgent } from "next/server";
 
-import { manifests } from "@/data";
-
 function isMobileUa(type: string) {
   return ["mobile", "tablet"].includes(type);
 }
