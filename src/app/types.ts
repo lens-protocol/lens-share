@@ -4,6 +4,7 @@ export enum PlatformType {
 }
 
 export enum RouteKind {
+  Home = "home",
   Profile = "profile",
   Publication = "publication",
 }

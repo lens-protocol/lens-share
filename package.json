@@ -1,5 +1,5 @@
 {
-  "name": "lens-share",
+  "name": "@lens-protocol/lens-share",
   "version": "0.1.0",
   "private": true,
   "scripts": {
