@@ -12,6 +12,13 @@ const config = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.mjs"],
 
   testEnvironment: "jest-environment-jsdom",
+
+  moduleNameMapper: {
+    // 🧑🏻‍🔧 resolve react module with the next.js inset one.
+    // see https://github.com/vercel/next.js/discussions/49304#discussioncomment-6108618
+    react: "next/dist/compiled/react/cjs/react.development.js",
+    "^@/(.*)$": "<rootDir>/src/$1",
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

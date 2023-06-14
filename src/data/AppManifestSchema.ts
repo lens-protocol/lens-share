@@ -4,6 +4,12 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 const tags = ["audio", "image", "text", "video"] as const;
 
+const AppIdSchema = z
+  .string()
+  .min(3)
+  .max(16)
+  .regex(/^[a-z][a-z0-9]+$/i);
+
 const TagSchema = z.enum(tags);
 
 export type Tag = z.infer<typeof TagSchema>;
@@ -12,40 +18,30 @@ const ProfileUrlSchema = z.string().url().includes(":handle");
 
 const PublicationUrlSchema = z.string().url().includes(":id");
 
-const RoutesSchema = z
-  .object({
-    [RouteKind.Profile]: ProfileUrlSchema,
-    [RouteKind.Publication]: PublicationUrlSchema,
-  })
-  .partial();
+const PlatformTypeSchema = z.nativeEnum(PlatformType);
 
-const MappingsSchema = z
-  .object({
-    [PlatformType.Web]: RoutesSchema,
-    [PlatformType.Mobile]: RoutesSchema,
-  })
-  .partial();
+const RoutesSchema = z.object({
+  [RouteKind.Home]: z.string().url(),
+  [RouteKind.Profile]: ProfileUrlSchema.optional(),
+  [RouteKind.Publication]: PublicationUrlSchema.optional(),
+});
 
 export const AppManifestSchema = z.object({
-  shortname: z.string().min(3).max(16),
+  appId: AppIdSchema,
   name: z.string().min(3).max(36),
   description: z.string().min(20).max(200),
+  platform: PlatformTypeSchema,
   icon: z.string().url(),
   image: z.string().url().optional(),
   tags: z
     .set(TagSchema)
     .max(tags.length)
     .catch(({ input }) => new Set(input)),
-  mappings: MappingsSchema,
+  routes: RoutesSchema,
 });
 
 export type AppManifest = z.infer<typeof AppManifestSchema>;
 
 export const AppManifestJsonSchema = zodToJsonSchema(AppManifestSchema, {
-  definitions: {
-    ProfileUrlSchema,
-    PublicationUrlSchema,
-    RoutesSchema,
-    TagSchema,
-  },
+  definitions: { AppIdSchema, ProfileUrlSchema, PublicationUrlSchema, TagSchema },
 });

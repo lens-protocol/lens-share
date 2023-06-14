@@ -1,12 +1,12 @@
 {
+  "appId": "lensprofile",
   "name": "Lens Profile",
-  "shortname": "Lens Profile",
   "description": "Visually explore Lens Protocol Profiles and Publications",
+  "platform": "web",
   "icon": "https://profile.lenskit.xyz/profile.png",
   "tags": [],
-  "mappings": {
-    "web": {
-      "profile": "https://profile.lenskit.xyz/:handle"
-    }
+  "routes": {
+    "home": "https://profile.lenskit.xyz/lensprotocol",
+    "profile": "https://profile.lenskit.xyz/:handle"
   }
 }

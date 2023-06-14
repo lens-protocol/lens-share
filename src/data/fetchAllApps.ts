@@ -1,6 +1,7 @@
+import * as path from "path";
 import { promises as fs } from "fs";
 import never from "never";
-import * as path from "path";
+import { cache } from "react";
 
 import { AppManifest, AppManifestSchema } from "./AppManifestSchema";
 
@@ -9,7 +10,7 @@ const folderPath = path.join(
   process.env.MANIFESTS_DIR ?? never("MANIFESTS_DIR env var not set")
 );
 
-export async function fetchAllApps(): Promise<ReadonlyArray<AppManifest>> {
+export const fetchAllApps = cache(async function (): Promise<ReadonlyArray<AppManifest>> {
   const files = await fs.readdir(folderPath);
 
   const jsonFiles = files.filter((file) => path.extname(file).toLowerCase() === ".json");
@@ -23,4 +24,4 @@ export async function fetchAllApps(): Promise<ReadonlyArray<AppManifest>> {
       return AppManifestSchema.parse(JSON.parse(data));
     })
   );
-}
+});

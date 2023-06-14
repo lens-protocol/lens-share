@@ -1,13 +1,13 @@
 {
+  "appId": "lenster",
   "name": "Lenster",
-  "shortname": "Lenster",
   "description": "Lenster is a composable, decentralized, and permission-less social media web app built with Lens Protocol 🌿",
+  "platform": "web",
   "icon": "https://lenster.xyz/logo.svg",
   "tags": ["video", "image", "audio", "text"],
-  "mappings": {
-    "web": {
-      "profile": "https://lenster.xyz/u/:handle",
-      "publication": "https://lenster.xyz/posts/:id"
-    }
+  "routes": {
+    "home": "https://lenster.xyz/",
+    "profile": "https://lenster.xyz/u/:handle",
+    "publication": "https://lenster.xyz/posts/:id"
   }
 }
