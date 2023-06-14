@@ -22,4 +22,15 @@ test.describe("Given a mobile browser", async () => {
       await expect(anyPublication.options).toHaveText(["Lenster", "Lenstube", "Memester"]);
     });
   });
+
+  test.describe("When submitting with the Just once button", async () => {
+    test("Then it should open the publication with the selected app", async ({
+      anyPublication,
+    }) => {
+      await anyPublication.open();
+      const url = await anyPublication.justOnce("Lenster");
+
+      await expect(url).toMatch(`https://lenster.xyz/posts/${anyPublication.publicationId}`);
+    });
+  });
 });
