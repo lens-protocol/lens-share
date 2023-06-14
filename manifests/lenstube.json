@@ -4,7 +4,7 @@
   "description": "Lenstube is a decentralized video-sharing social media platform built with Lens protocol.",
   "platform": "web",
   "icon": "https://static.lenstube.xyz/images/brand/lenstube.svg",
-  "tags": ["video", "audio"],
+  "tags": ["video"],
   "routes": {
     "home": "https://lenstube.xyz/",
     "profile": "https://lenstube.xyz/channel/:handle",
