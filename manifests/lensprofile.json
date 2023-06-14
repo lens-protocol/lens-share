@@ -1,0 +1,12 @@
+{
+  "name": "Lens Profile",
+  "shortname": "Lens Profile",
+  "description": "Visually explore Lens Protocol Profiles and Publications",
+  "icon": "https://profile.lenskit.xyz/profile.png",
+  "tags": [],
+  "mappings": {
+    "web": {
+      "profile": "https://profile.lenskit.xyz/:handle"
+    }
+  }
+}

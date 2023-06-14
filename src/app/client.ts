@@ -1,5 +1,5 @@
-import { development, LensClient } from "@lens-protocol/client";
+import { production, LensClient } from "@lens-protocol/client";
 
 export const client = new LensClient({
-  environment: development,
+  environment: production,
 });

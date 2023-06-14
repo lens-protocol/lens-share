@@ -1,0 +1,13 @@
+{
+  "name": "Lenstube",
+  "shortname": "Lenstube",
+  "description": "Lenstube is a decentralized video-sharing social media platform built with Lens protocol.",
+  "icon": "https://static.lenstube.xyz/images/brand/lenstube.svg",
+  "tags": ["video", "audio"],
+  "mappings": {
+    "web": {
+      "profile": "https://lenstube.xyz/channel/:handle",
+      "publication": "https://lenstube.xyz/watch/:id"
+    }
+  }
+}

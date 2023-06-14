@@ -1,0 +1,13 @@
+{
+  "name": "Memester",
+  "shortname": "Memester",
+  "description": "The NFT Meme Platform. Create memes and turn them into NFTs. Participate in meme competitions and win prizes.",
+  "icon": "https://memester.xyz/assets/logo.8957acf8.png",
+  "tags": ["image"],
+  "mappings": {
+    "web": {
+      "profile": "https://memester.xyz/user/:handle",
+      "publication": "https://memester.xyz/meme/:id"
+    }
+  }
+}
