@@ -1,6 +1,7 @@
+import { PlatformType, RouteKind } from "@/app/types";
+
 import { AppManifest } from "./AppManifestSchema";
 import { fetchAllApps } from "./fetchAllApps";
-import { PlatformType, RouteKind } from "@/app/types";
 
 export type FetchPublicationAppsRequest = {
   platform: PlatformType;
@@ -23,7 +24,7 @@ function supportsPublicationRoute(app: AppManifest) {
   return app.routes?.[RouteKind.Publication];
 }
 
-export async function fetchPublicationApps(
+export async function findPublicationApps(
   request: FetchPublicationAppsRequest
 ): Promise<ReadonlyArray<AppManifest>> {
   const apps = await fetchAllApps();

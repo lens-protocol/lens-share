@@ -1,6 +1,7 @@
-import { PlatformType, RouteKind } from "@/app/types";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
+
+import { PlatformType, RouteKind } from "@/app/types";
 
 const tags = ["audio", "image", "text", "video"] as const;
 

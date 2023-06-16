@@ -9,7 +9,7 @@ export class PublicationPage {
   }
 
   async open() {
-    await this.page.goto(`/p/${this.publicationId}`);
+    return await this.page.goto(`/p/${this.publicationId}`);
   }
 
   async openAsSharedBy(appId: string) {
@@ -21,10 +21,18 @@ export class PublicationPage {
   async justOnce(label: string) {
     await this.page.getByLabel(label).click();
     await this.page.getByRole("button", { name: "Just once" }).click();
+    return this.waitForRedirect();
+  }
+
+  async always(label: string) {
+    await this.page.getByLabel(label).click();
+    await this.page.getByRole("button", { name: "Always" }).click();
+    return this.waitForRedirect();
+  }
+
+  private async waitForRedirect() {
     const currentUrl = await this.page.url();
     await this.page.waitForURL((newUrl) => newUrl.toString() !== currentUrl);
     return this.page.url();
   }
-
-  async always(appId: string) {}
 }
