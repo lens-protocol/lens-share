@@ -8,3 +8,8 @@ export enum RouteKind {
   Profile = "profile",
   Publication = "publication",
 }
+
+export enum SelectionMode {
+  JustOnce = "justOnce",
+  Always = "always",
+}

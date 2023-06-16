@@ -1,11 +1,13 @@
 import { notFound } from "next/navigation";
 
-import { AppManifest, fetchPublicationApps, findAppById } from "@/data";
-import { AppRadioOption } from "@/app/components/AppRadioOption";
 import { client } from "@/app/client";
-import { openWith } from "@/app/actions";
-import { PublicationFragment } from "@lens-protocol/client";
+import { AppRadioOption } from "@/app/components/AppRadioOption";
 import { resolvePlatformType } from "@/app/device";
+import { SelectionMode } from "@/app/types";
+import { findPublicationApps, findApp, findFavoriteApp } from "@/data";
+
+import { openWith } from "./actions";
+import { redirectTo } from "./redirect";
 
 export type PublicationPageProps = {
   params: {
@@ -16,21 +18,24 @@ export type PublicationPageProps = {
   };
 };
 
-function createRedirectUrl(app: AppManifest, publication: PublicationFragment) {
-  return app.routes.publication?.replace(":id", publication.id) ?? app.routes.home;
-}
-
 export default async function PublicationPage({ params, searchParams }: PublicationPageProps) {
+  const platform = resolvePlatformType();
   const publication = await client.publication.fetch({ publicationId: params.id });
+
+  const favoriteApp = await findFavoriteApp({ platform });
+
+  if (favoriteApp) {
+    redirectTo(favoriteApp, params.id);
+  }
 
   if (!publication) notFound();
 
-  const options = await fetchPublicationApps({
-    platform: resolvePlatformType(),
+  const options = await findPublicationApps({
+    platform,
     exclude: searchParams.by,
   });
 
-  const attribution = searchParams.by ? await findAppById(searchParams.by) : null;
+  const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
 
   return (
     <div className="fixed inset-0 flex items-end justify-center">
@@ -38,6 +43,8 @@ export default async function PublicationPage({ params, searchParams }: Publicat
         action={openWith}
         className="bg-white dark:bg-slate-800 rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
       >
+        <input type="hidden" name="publicationId" value={publication.id} />
+
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4 dark:text-white">
             Open {publication.__typename} by @{publication.profile.handle} with
@@ -46,10 +53,7 @@ export default async function PublicationPage({ params, searchParams }: Publicat
           {attribution && (
             <>
               <div className="p-2 space-y-2" data-testid="attribution">
-                <AppRadioOption
-                  app={attribution}
-                  url={createRedirectUrl(attribution, publication)}
-                />
+                <AppRadioOption app={attribution} />
               </div>
               {options.length > 0 && <p>or use:</p>}
             </>
@@ -59,7 +63,7 @@ export default async function PublicationPage({ params, searchParams }: Publicat
             <ul className="space-y-2">
               {options.map((app) => (
                 <li key={app.appId} className="flex items-center px-2">
-                  <AppRadioOption app={app} url={createRedirectUrl(app, publication)} />
+                  <AppRadioOption app={app} />
                 </li>
               ))}
             </ul>
@@ -69,14 +73,14 @@ export default async function PublicationPage({ params, searchParams }: Publicat
           <button
             className="text-gray-800 dark:text-white font-medium uppercase transform"
             name="mode"
-            value="always"
+            value={SelectionMode.Always}
           >
             Always
           </button>
           <button
             className="text-gray-800 dark:text-white font-medium uppercase transform"
             name="mode"
-            value="just-once"
+            value={SelectionMode.JustOnce}
           >
             Just Once
           </button>

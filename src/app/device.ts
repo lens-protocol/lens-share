@@ -1,6 +1,7 @@
 import { headers } from "next/headers";
-import { PlatformType } from "./types";
 import { userAgent } from "next/server";
+
+import { PlatformType } from "./types";
 
 function isMobileUa(type: string) {
   return ["mobile", "tablet"].includes(type);
