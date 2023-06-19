@@ -41,12 +41,12 @@ export default async function PublicationPage({ params, searchParams }: Publicat
     <div className="fixed inset-0 flex items-end justify-center">
       <form
         action={openWith}
-        className="bg-white dark:bg-slate-800 rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
+        className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
       >
         <input type="hidden" name="publicationId" value={publication.id} />
 
         <div className="p-4">
-          <h2 className="text-xl font-bold mb-4 dark:text-white">
+          <h2 className="text-xl font-bold mb-4">
             Open {publication.__typename} by @{publication.profile.handle} with
           </h2>
 
