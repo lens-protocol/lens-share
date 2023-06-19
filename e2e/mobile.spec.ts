@@ -9,7 +9,13 @@ test.describe("Given a mobile browser", async () => {
     test("Then it should show in order mobile and web apps options", async ({ anyPublication }) => {
       await anyPublication.open();
 
-      await expect(anyPublication.options).toHaveText(["Lenster", "Lenstube", "Memester"]);
+      await expect(anyPublication.options).toHaveText([
+        "Buttrfly",
+        "Orb",
+        "Lenster",
+        "Lenstube",
+        "Memester",
+      ]);
     });
   });
 
@@ -20,7 +26,12 @@ test.describe("Given a mobile browser", async () => {
       await anyPublication.openAsSharedBy("orb");
 
       await expect(anyPublication.attribution).toHaveText("Orb");
-      await expect(anyPublication.options).toHaveText(["Lenster", "Lenstube", "Memester"]);
+      await expect(anyPublication.options).toHaveText([
+        "Buttrfly",
+        "Lenster",
+        "Lenstube",
+        "Memester",
+      ]);
     });
   });
 
