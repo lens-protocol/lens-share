@@ -4,7 +4,6 @@
   "description": "Visually explore Lens Protocol Profiles and Publications",
   "platform": "web",
   "icon": "https://profile.lenskit.xyz/profile.png",
-  "tags": [],
   "routes": {
     "home": "https://profile.lenskit.xyz/lensprotocol",
     "profile": "https://profile.lenskit.xyz/:handle"
