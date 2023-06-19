@@ -1,4 +1,5 @@
 import { devices } from "@playwright/test";
+
 import { expect, test } from "./fixtures/publications";
 
 test.use(devices["Desktop Chrome"]);
