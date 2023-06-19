@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:unit": "jest src/**/__tests__/*.spec.ts -- ",
-    "test:unit:watch": "jest src/**/__tests__/*.spec.ts --watch ",
+    "test:unit:watch": "jest src/**/__tests__/*.spec.ts --watch",
     "test:e2e": "playwright test",
     "test:ci": "pnpm test:unit && test:e2e"
   },
