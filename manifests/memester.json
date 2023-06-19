@@ -4,7 +4,6 @@
   "description": "The NFT Meme Platform. Create memes and turn them into NFTs. Participate in meme competitions and win prizes.",
   "platform": "web",
   "icon": "https://memester.xyz/assets/logo.8957acf8.png",
-  "tags": ["image"],
   "routes": {
     "home": "https://memester.xyz/",
     "profile": "https://memester.xyz/user/:handle",

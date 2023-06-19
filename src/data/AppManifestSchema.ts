@@ -3,17 +3,11 @@ import { zodToJsonSchema } from "zod-to-json-schema";
 
 import { PlatformType, RouteKind } from "@/app/types";
 
-const tags = ["audio", "image", "text", "video"] as const;
-
 const AppIdSchema = z
   .string()
   .min(3)
   .max(16)
   .regex(/^[a-z][a-z0-9]+$/i);
-
-const TagSchema = z.enum(tags);
-
-export type Tag = z.infer<typeof TagSchema>;
 
 const ProfileUrlSchema = z.string().url().includes(":handle");
 
@@ -34,15 +28,11 @@ export const AppManifestSchema = z.object({
   platform: PlatformTypeSchema,
   icon: z.string().url(),
   image: z.string().url().optional(),
-  tags: z
-    .set(TagSchema)
-    .max(tags.length)
-    .catch(({ input }) => new Set(input)),
   routes: RoutesSchema,
 });
 
 export type AppManifest = z.infer<typeof AppManifestSchema>;
 
 export const AppManifestJsonSchema = zodToJsonSchema(AppManifestSchema, {
-  definitions: { AppIdSchema, ProfileUrlSchema, PublicationUrlSchema, TagSchema },
+  definitions: { AppIdSchema, ProfileUrlSchema, PublicationUrlSchema },
 });
