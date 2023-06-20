@@ -10,7 +10,8 @@
       "url": "https://buttrfly.app/profile/:handle"
     },
     "publication": {
-      "url": "https://buttrfly.app/post/:id"
+      "url": "https://buttrfly.app/post/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
     }
   }
 }

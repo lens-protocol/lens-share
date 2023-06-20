@@ -2,7 +2,7 @@ import { AppId, PlatformType, RouteKind } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
 import { byMobilePlatformFirst } from "./comparators";
-import { fetchAllApps } from "./fetchAllApps";
+import { fetchAllApps } from "./storage";
 
 export type FindPublicationAppsRequest = {
   platform: PlatformType;
