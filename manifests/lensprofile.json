@@ -6,6 +6,8 @@
   "icon": "https://profile.lenskit.xyz/profile.png",
   "routes": {
     "home": "https://profile.lenskit.xyz/lensprotocol",
-    "profile": "https://profile.lenskit.xyz/:handle"
+    "profile": {
+      "url": "https://profile.lenskit.xyz/:handle"
+    }
   }
 }

@@ -10,9 +10,13 @@ const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
   .regex(/^[a-z][a-z0-9]+$/i)
   .transform((value) => value as AppId);
 
-const ProfileUrlSchema = z.string().url().includes(":handle");
+const ProfileUrlSchema = z.object({
+  url: z.string().url().includes(":handle"),
+});
 
-const PublicationUrlSchema = z.string().url().includes(":id");
+const PublicationUrlSchema = z.object({
+  url: z.string().url().includes(":id"),
+});
 
 const PlatformTypeSchema = z.nativeEnum(PlatformType);
 

@@ -6,7 +6,11 @@
   "icon": "https://orb.ac/assets/orb-logo-black.svg",
   "routes": {
     "home": "https://orb.ac/",
-    "profile": "https://orb.ac/@:handle",
-    "publication": "https://orb.ac/post/:id"
+    "profile": {
+      "url": "https://orb.ac/@:handle"
+    },
+    "publication": {
+      "url": "https://orb.ac/post/:id"
+    }
   }
 }
