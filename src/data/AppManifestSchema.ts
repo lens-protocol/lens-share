@@ -1,13 +1,14 @@
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
-import { PlatformType, RouteKind } from "@/app/types";
+import { AppId, PlatformType, RouteKind } from "@/app/types";
 
-const AppIdSchema = z
+const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
   .string()
   .min(3)
   .max(16)
-  .regex(/^[a-z][a-z0-9]+$/i);
+  .regex(/^[a-z][a-z0-9]+$/i)
+  .transform((value) => value as AppId);
 
 const ProfileUrlSchema = z.string().url().includes(":handle");
 
