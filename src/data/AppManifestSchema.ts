@@ -21,7 +21,7 @@ const ProfileUrlSchema = z.object(
     url: z
       .string({
         description:
-          "The `:handle` placeholder will be replaced with the full profile handle (e.g. `lensprotocol.lens`, `lensapi.lens`).",
+          "The `:handle` placeholder will be replaced with the full profile handle inclusive of `.lens` suffix when relevant (e.g. `lensapi.lens`, `lensprotocol`).",
       })
       .url()
       .includes(":handle"),
