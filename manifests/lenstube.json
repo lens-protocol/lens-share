@@ -10,7 +10,8 @@
       "url": "https://lenstube.xyz/channel/:handle"
     },
     "publication": {
-      "url": "https://lenstube.xyz/watch/:id"
+      "url": "https://lenstube.xyz/watch/:id",
+      "supports": ["VIDEO"]
     }
   }
 }

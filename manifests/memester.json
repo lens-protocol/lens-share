@@ -10,7 +10,8 @@
       "url": "https://memester.xyz/user/:handle"
     },
     "publication": {
-      "url": "https://memester.xyz/meme/:id"
+      "url": "https://memester.xyz/meme/:id",
+      "supports": ["IMAGE"]
     }
   }
 }

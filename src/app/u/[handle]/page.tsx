@@ -4,7 +4,7 @@ import { client } from "@/app/client";
 import { resolvePlatformType } from "@/app/device";
 import { SearchParams, SelectionMode } from "@/app/types";
 import { AppRadioOption } from "@/components/AppRadioOption";
-import { findPublicationApps, findApp, findFavoriteApp } from "@/data";
+import { findApp, findFavoriteApp, findProfileApps } from "@/data";
 import { formatProfileHandle } from "@/formatters";
 
 import { openWith } from "./actions";
@@ -31,7 +31,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
   const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
 
-  const options = await findPublicationApps({
+  const options = await findProfileApps({
     platform,
     exclude: attribution?.appId,
   });
