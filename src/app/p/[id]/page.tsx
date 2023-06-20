@@ -32,6 +32,7 @@ export default async function PublicationPage({ params, searchParams }: Publicat
   const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
 
   const options = await findPublicationApps({
+    publication,
     platform,
     exclude: attribution?.appId,
   });
