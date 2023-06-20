@@ -4,17 +4,17 @@ import { AppManifest } from "./AppManifestSchema";
 import { byMobilePlatformFirst } from "./comparators";
 import { fetchAllApps } from "./fetchAllApps";
 
-export type FindPublicationAppsRequest = {
+export type FindProfileAppsRequest = {
   platform: PlatformType;
   exclude?: AppId;
 };
 
-function supportsPublicationRoute(app: AppManifest) {
-  return app.routes?.[RouteKind.Publication];
+function supportsProfileRoute(app: AppManifest) {
+  return app.routes?.[RouteKind.Profile];
 }
 
-export async function findPublicationApps(
-  request: FindPublicationAppsRequest
+export async function findProfileApps(
+  request: FindProfileAppsRequest
 ): Promise<ReadonlyArray<AppManifest>> {
   const apps = await fetchAllApps();
 
@@ -23,11 +23,11 @@ export async function findPublicationApps(
       (app) =>
         app.appId !== request.exclude &&
         app.platform === PlatformType.Web &&
-        supportsPublicationRoute(app)
+        supportsProfileRoute(app)
     );
   }
 
   return apps
-    .filter((app) => app.appId !== request.exclude && supportsPublicationRoute(app))
+    .filter((app) => app.appId !== request.exclude && supportsProfileRoute(app))
     .sort(byMobilePlatformFirst);
 }

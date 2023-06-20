@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
-import { AppRadioOption } from "@/app/components/AppRadioOption";
 import { resolvePlatformType } from "@/app/device";
-import { SelectionMode } from "@/app/types";
+import { SearchParams, SelectionMode } from "@/app/types";
+import { AppRadioOption } from "@/components/AppRadioOption";
 import { findPublicationApps, findApp, findFavoriteApp } from "@/data";
+import { formatProfileHandle } from "@/formatters";
 
 import { openWith } from "./actions";
 import { redirectTo } from "./redirect";
@@ -13,9 +14,7 @@ export type PublicationPageProps = {
   params: {
     id: string;
   };
-  searchParams: {
-    by?: string;
-  };
+  searchParams: SearchParams;
 };
 
 export default async function PublicationPage({ params, searchParams }: PublicationPageProps) {
@@ -30,12 +29,12 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
   if (!publication) notFound();
 
+  const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
+
   const options = await findPublicationApps({
     platform,
-    exclude: searchParams.by,
+    exclude: attribution?.appId,
   });
-
-  const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
 
   return (
     <div className="fixed inset-0 flex items-end justify-center">
@@ -47,7 +46,7 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">
-            Open {publication.__typename} by @{publication.profile.handle} with
+            Open {publication.__typename} by {formatProfileHandle(publication.profile.handle)} with
           </h2>
 
           {attribution && (
@@ -96,6 +95,6 @@ export async function generateMetadata({ params }: PublicationPageProps) {
   if (!publication) notFound();
 
   return {
-    title: `${publication.__typename} by @${publication.profile.handle}`,
+    title: `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`,
   };
 }

@@ -31,9 +31,6 @@ dependencies:
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
-  ts-tiny-invariant:
-    specifier: ^2.0.4
-    version: 2.0.4
   typescript:
     specifier: 5.1.3
     version: 5.1.3
@@ -2918,10 +2915,6 @@ packages:
 
   /ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
-    dev: false
-
-  /ts-tiny-invariant@2.0.4:
-    resolution: {integrity: sha512-6AIQGf3rbMyci4fZU5aq5AUJN2O3sMPPY+R8waCguQOPRJDh0n/vmxVISCp72TJr4k5kikaU1yqX8bTwfTFjcQ==}
     dev: false
 
   /tsconfig-paths@3.14.2:
