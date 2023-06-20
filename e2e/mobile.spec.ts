@@ -6,16 +6,10 @@ test.use(devices["iPhone 13"]);
 
 test.describe("Given a mobile browser", async () => {
   test.describe("When opening a Publication link", async () => {
-    test("Then it should show in order mobile and web apps options", async ({ anyPublication }) => {
-      await anyPublication.open();
+    test("Then it should show in order mobile and web apps options", async ({ textPost }) => {
+      await textPost.open();
 
-      await expect(anyPublication.options).toHaveText([
-        "Buttrfly",
-        "Orb",
-        "Lenster",
-        "Lenstube",
-        "Memester",
-      ]);
+      await expect(textPost.options).toHaveText(["Buttrfly", "Orb", "Lenster", "Memester"]);
     });
   });
 });
