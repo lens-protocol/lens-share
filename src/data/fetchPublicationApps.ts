@@ -4,6 +4,7 @@ import { PlatformType, RouteKind } from "@/app/types";
 
 export type FetchPublicationAppsRequest = {
   platform: PlatformType;
+  exclude?: string;
 };
 
 function byMobilePlatformFirst(a: AppManifest, b: AppManifest) {
@@ -28,8 +29,15 @@ export async function fetchPublicationApps(
   const apps = await fetchAllApps();
 
   if (request.platform === PlatformType.Web) {
-    return apps.filter((app) => app.platform === PlatformType.Web && supportsPublicationRoute(app));
+    return apps.filter(
+      (app) =>
+        app.appId !== request.exclude &&
+        app.platform === PlatformType.Web &&
+        supportsPublicationRoute(app)
+    );
   }
 
-  return apps.filter(supportsPublicationRoute).sort(byMobilePlatformFirst);
+  return apps
+    .filter((app) => app.appId !== request.exclude && supportsPublicationRoute(app))
+    .sort(byMobilePlatformFirst);
 }

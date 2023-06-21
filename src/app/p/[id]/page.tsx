@@ -25,7 +25,10 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
   if (!publication) notFound();
 
-  const apps = await fetchPublicationApps({ platform: resolvePlatformType() });
+  const options = await fetchPublicationApps({
+    platform: resolvePlatformType(),
+    exclude: searchParams.by,
+  });
 
   const attribution = searchParams.by ? await findAppById(searchParams.by) : null;
 
@@ -42,23 +45,25 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
           {attribution && (
             <>
-              <div className="p-2 space-y-2">
+              <div className="p-2 space-y-2" data-testid="attribution">
                 <AppRadioOption
                   app={attribution}
                   url={createRedirectUrl(attribution, publication)}
                 />
               </div>
-              <p>or use:</p>
+              {options.length > 0 && <p>or use:</p>}
             </>
           )}
 
-          <ul className="space-y-2">
-            {apps.map((app) => (
-              <li key={app.appId} className="flex items-center px-2">
-                <AppRadioOption app={app} url={createRedirectUrl(app, publication)} />
-              </li>
-            ))}
-          </ul>
+          {options.length > 0 && (
+            <ul className="space-y-2">
+              {options.map((app) => (
+                <li key={app.appId} className="flex items-center px-2">
+                  <AppRadioOption app={app} url={createRedirectUrl(app, publication)} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="bg-gray-100 dark:bg-slate-700 p-4 flex justify-end gap-4">
           <button

@@ -16,7 +16,18 @@ describe(`Given the ${fetchPublicationApps.name} function`, () => {
         - capable of presenting publications`, async () => {
       const list = await fetchPublicationApps({ platform: PlatformType.Mobile });
 
-      expect(list.map((app) => app.appId)).toEqual(["orb", "lenster", "lenstube", "memester"]);
+      expect(list.map((app) => app.appId)).toEqual(["lenster", "lenstube", "memester"]);
+    });
+  });
+
+  describe(`when invoked with "exclude" option`, () => {
+    it(`should return a list apps that without the specified app`, async () => {
+      const list = await fetchPublicationApps({
+        platform: PlatformType.Mobile,
+        exclude: "lenster",
+      });
+
+      expect(list.map((app) => app.appId)).toEqual(["lenstube", "memester"]);
     });
   });
 });
