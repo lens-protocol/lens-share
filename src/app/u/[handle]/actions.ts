@@ -12,8 +12,8 @@ export async function openWith(data: FormData) {
   const appId = data.get("appId") as string | null;
   invariant(appId !== null, "Missing App ID");
 
-  const publicationId = data.get("publicationId") as string | null;
-  invariant(publicationId !== null, "Missing Publication ID");
+  const handle = data.get("handle") as string | null;
+  invariant(handle !== null, "Missing handle");
 
   const app = await findApp({ appId, platform: resolvePlatformType() });
   invariant(app !== null, "App not found");
@@ -25,5 +25,5 @@ export async function openWith(data: FormData) {
     await saveFavoriteApp(app);
   }
 
-  redirectTo(app, publicationId);
+  redirectTo(app, handle);
 }
