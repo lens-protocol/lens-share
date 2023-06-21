@@ -1,0 +1,17 @@
+{
+  "appId": "buttrfly",
+  "name": "Buttrfly",
+  "description": "You own your data. The social media you deserve.",
+  "platform": "mobile",
+  "icon": "https://buttrfly.app/buttrfly-icon-rounded.png",
+  "routes": {
+    "home": "https://buttrfly.app/",
+    "profile": {
+      "url": "https://buttrfly.app/profile/:handle"
+    },
+    "publication": {
+      "url": "https://buttrfly.app/post/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
+  }
+}

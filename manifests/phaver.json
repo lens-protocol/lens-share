@@ -1,0 +1,10 @@
+{
+  "appId": "phaver",
+  "name": "Phaver",
+  "description": "Help us curate interesting stuff online and offline and get rewarded.",
+  "platform": "mobile",
+  "icon": "https://play-lh.googleusercontent.com/zvGNd9l1io5wL0SVxzqIrMzA0bRoO8Dsxmam8rj_KYZSi7hxg8L7VS-_HO2HxM3k9ak=w480-h960-rw",
+  "routes": {
+    "home": "https://phaver.com/"
+  }
+}

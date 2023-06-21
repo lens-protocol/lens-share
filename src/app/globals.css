@@ -3,25 +3,75 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
+  --foreground: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-    color-scheme: dark;
-  }
+  color-scheme: dark;
 }
 
 body {
   @apply min-h-screen antialiased;
+}
 
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb)))
-    rgb(var(--background-start-rgb));
+@layer components {
+  .header-one {
+    @apply font-gintoNord text-3xl font-bold leading-[70px] lg:text-[100px] 2xl:text-[120px] lg:leading-[110px] lg:tracking-[-7px];
+  }
+
+  .header-two {
+    @apply font-gintoNord text-2xl font-bold lg:text-[100px] lg:leading-[100px] lg:tracking-[-4px];
+  }
+
+  .header-three {
+    @apply font-gintoNord text-2xl font-bold lg:text-[90px] lg:leading-[90px] lg:tracking-[-3px];
+  }
+
+  .header-four {
+    @apply font-gintoNord text-[32px] font-bold leading-[30px] tracking-[-1px] lg:text-[58px] lg:leading-[50px] lg:tracking-[-2.5px];
+  }
+
+  .header-five {
+    @apply font-gintoNord text-[36px] font-medium leading-[35px] tracking-[-2px] lg:text-[50px] lg:leading-[50px];
+  }
+
+  .t2 {
+    @apply lg:text-[30px] lg:leading-[30px] lg:tracking-[-1.2px];
+  }
+
+  .t3 {
+    @apply lg:text-[24px] lg:leading-[24px] lg:tracking-[-0.6px];
+  }
+
+  .t3-medium {
+    @apply text-[14px] font-medium leading-[16px] tracking-[-0.2px] text-white opacity-80 lg:text-[24px] lg:leading-[28px] lg:tracking-[-0.6px];
+  }
+
+  .sm-header-one {
+    @apply font-gintoNord text-[40px] font-bold leading-[36px] tracking-[-1px];
+  }
+
+  .t4 {
+    @apply text-[18px] leading-[24px] tracking-[0.3px] font-normal 2xl:text-[1.25vw] 2xl:leading-[1.6vw] 2xl:tracking-[0.02vw];
+  }
+  .t4-b {
+    @apply text-[18px] leading-[24px] tracking-[0.3px] font-medium 2xl:text-[1.25vw] 2xl:leading-[1.6vw] 2xl:tracking-[0.02vw];
+  }
+
+  .t5 {
+    @apply text-[16px] leading-[19px] -tracking-[0.4px] font-normal 2xl:text-[1.1vw] 2xl:leading-[1.3vw] 2xl:tracking-[0.02vw];
+  }
+  .t5-b {
+    @apply text-[16px] leading-[19px] -tracking-[0.2px] font-medium 2xl:text-[1.1vw] 2xl:leading-[1.3vw] 2xl:tracking-[0.01vw];
+  }
+
+  .t6 {
+    @apply text-[14px] leading-[16px] -tracking-[0.2px] font-normal 2xl:text-[0.9vw] 2xl:leading-[1vw] 2xl:-tracking-[0.01vw];
+  }
+  .t6-b {
+    @apply text-[14px] leading-[16px] -tracking-[0.2px] font-bold 2xl:text-[0.9vw] 2xl:leading-[1vw] 2xl:-tracking-[0.01vw];
+  }
+
+  .t7 {
+    @apply text-[10px] leading-[12px] tracking-[0.2px] font-bold 2xl:text-[0.7vw] 2xl:leading-[0.822vw] 2xl:tracking-[0.01vw];
+  }
 }
