@@ -1,4 +1,8 @@
 import { Locator, Page } from "@playwright/test";
+import never from "never";
+import { Metadata } from "next";
+
+export type OpenGraphMetadata = NonNullable<Metadata["openGraph"]>;
 
 export abstract class BasePage {
   readonly options: Locator;
@@ -7,6 +11,26 @@ export abstract class BasePage {
   constructor(private readonly page: Page, private readonly path: string) {
     this.options = page.locator("ul > li > label");
     this.attribution = page.getByTestId("attribution");
+  }
+
+  async extractOpenGraphProperties(): Promise<OpenGraphMetadata> {
+    const metaTags = await this.page.locator('meta[property^="og:"]').all();
+
+    const pairs = await Promise.all(
+      metaTags.map(async (tag) => ({
+        property: (await tag.getAttribute("property")) ?? never(),
+        content: (await tag.getAttribute("content")) ?? never(),
+      }))
+    );
+
+    return pairs.reduce((acc, { property, content }) => {
+      if (property && content) {
+        // @ts-ignore
+        acc[property] = content;
+      }
+
+      return acc;
+    }, {} as OpenGraphMetadata);
   }
 
   async open() {
