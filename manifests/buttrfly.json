@@ -6,7 +6,12 @@
   "icon": "https://buttrfly.app/buttrfly-icon-rounded.png",
   "routes": {
     "home": "https://buttrfly.app/",
-    "profile": "https://buttrfly.app/profile/:handle",
-    "publication": "https://buttrfly.app/post/:id"
+    "profile": {
+      "url": "https://buttrfly.app/profile/:handle"
+    },
+    "publication": {
+      "url": "https://buttrfly.app/post/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
   }
 }

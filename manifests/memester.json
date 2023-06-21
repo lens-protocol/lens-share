@@ -6,7 +6,12 @@
   "icon": "https://memester.xyz/assets/logo.8957acf8.png",
   "routes": {
     "home": "https://memester.xyz/",
-    "profile": "https://memester.xyz/user/:handle",
-    "publication": "https://memester.xyz/meme/:id"
+    "profile": {
+      "url": "https://memester.xyz/user/:handle"
+    },
+    "publication": {
+      "url": "https://memester.xyz/meme/:id",
+      "supports": ["IMAGE"]
+    }
   }
 }

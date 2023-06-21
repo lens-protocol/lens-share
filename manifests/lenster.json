@@ -6,7 +6,12 @@
   "icon": "https://lenster.xyz/logo.svg",
   "routes": {
     "home": "https://lenster.xyz/",
-    "profile": "https://lenster.xyz/u/:handle",
-    "publication": "https://lenster.xyz/posts/:id"
+    "profile": {
+      "url": "https://lenster.xyz/u/:handle"
+    },
+    "publication": {
+      "url": "https://lenster.xyz/posts/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
   }
 }
