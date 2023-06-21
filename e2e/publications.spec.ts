@@ -49,7 +49,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
 
       expect(await imagePost.extractOpenGraphProperties()).toMatchObject({
         "og:image":
-          "https://ipfs-2.thirdwebcdn.com/ipfs/QmZmNNSvLbBBYWhT9KvtYBvD5bcbJL6L7VRyMDZynCzvAL",
+          "https://ipfs-2.thirdwebcdn.com/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
         "og:image:type": "image/jpeg",
       });
     });
@@ -62,7 +62,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
       expect(await imagePost.extractTwitterMetaTags()).toMatchObject({
         "twitter:card": "summary_large_image",
         "twitter:image":
-          "https://ipfs-2.thirdwebcdn.com/ipfs/QmZmNNSvLbBBYWhT9KvtYBvD5bcbJL6L7VRyMDZynCzvAL",
+          "https://ipfs-2.thirdwebcdn.com/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
       });
     });
   });
