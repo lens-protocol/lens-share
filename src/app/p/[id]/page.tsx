@@ -7,6 +7,7 @@ import { client } from "@/app/client";
 import { resolvePlatformType } from "@/app/device";
 import { SearchParams, SelectionMode } from "@/app/types";
 import { AppRadioOption } from "@/components/AppRadioOption";
+import { twitterHandle } from "@/config";
 import { findPublicationApps, findApp, findFavoriteApp, AppManifest } from "@/data";
 import { formatProfileHandle } from "@/formatters";
 import { isImageType } from "@/utils/media";
@@ -116,7 +117,12 @@ function formatPageDescription(metadata: MetadataFragment) {
     : undefined;
 }
 
-function formatPageTitle(publication: PublicationFragment) {
+function formatPageTitle(publication: PublicationFragment, attribution: AppManifest | null) {
+  if (attribution) {
+    return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)} on ${
+      attribution.name
+    }}`;
+  }
   return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`;
 }
 
@@ -148,12 +154,14 @@ export async function generateMetadata(
 
   const metadata = resolveMetadata(publication);
 
-  const title = formatPageTitle(publication);
+  const title = formatPageTitle(publication, attribution);
 
   const description = formatPageDescription(metadata);
 
   const { openGraph } = await parent;
   const siteName = attribution?.name ?? openGraph?.siteName ?? undefined;
+
+  const images = await extractImages(metadata);
 
   return {
     title,
@@ -164,7 +172,14 @@ export async function generateMetadata(
       url: `/p/${publication.id}`,
       type: "article",
       siteName,
-      images: await extractImages(metadata),
+      images,
+    },
+    twitter: {
+      title,
+      description,
+      card: images.length ? "summary_large_image" : "summary",
+      site: attribution?.twitter ?? twitterHandle,
+      images: images.map(({ url }) => ({ url })),
     },
   };
 }

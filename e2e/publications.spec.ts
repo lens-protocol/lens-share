@@ -6,10 +6,10 @@ test.use(devices["Desktop Chrome"]);
 
 test.describe("Given a Publication link", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show relevant app options", async ({ textPost }) => {
-      await textPost.open();
+    test("Then it should show relevant app options", async ({ imagePost }) => {
+      await imagePost.open();
 
-      await expect(textPost.options).toHaveText(["Lenster", "Memester"]);
+      await expect(imagePost.options).toHaveText(["Lenster", "Memester"]);
     });
   });
 });
@@ -30,6 +30,17 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "og:type": "article",
       });
     });
+
+    test("Then it should include the expected Twitter Card meta tags", async ({ textPost }) => {
+      await textPost.open();
+
+      expect(await textPost.extractTwitterMetaTags()).toEqual({
+        "twitter:card": "summary",
+        "twitter:site": "LensProtocol",
+        "twitter:title": "Post by @stani.lens",
+        "twitter:description": "This post will age well.",
+      });
+    });
   });
 
   test.describe("When publication contains images", async () => {
@@ -40,6 +51,18 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "og:image":
           "https://ipfs-2.thirdwebcdn.com/ipfs/QmZmNNSvLbBBYWhT9KvtYBvD5bcbJL6L7VRyMDZynCzvAL",
         "og:image:type": "image/jpeg",
+      });
+    });
+
+    test("Then it should embed Twitter Card meta tags for a so-called `summary_large_image`", async ({
+      imagePost,
+    }) => {
+      await imagePost.open();
+
+      expect(await imagePost.extractTwitterMetaTags()).toMatchObject({
+        "twitter:card": "summary_large_image",
+        "twitter:image":
+          "https://ipfs-2.thirdwebcdn.com/ipfs/QmZmNNSvLbBBYWhT9KvtYBvD5bcbJL6L7VRyMDZynCzvAL",
       });
     });
   });
@@ -56,13 +79,28 @@ test.describe("Given a Publication link posted on a social media website/app", a
   });
 
   test.describe("When the link includes the `by` attribution param", async () => {
-    test("Then it should use the app used to share as Open Graph site_name tag", async ({
+    test("Then it should mention the originating app in page `title` and Open Graph `site_name` tag", async ({
       textPost,
     }) => {
       await textPost.openAsSharedBy("lenster");
 
+      expect(await textPost.getTitle()).toContain("Lenster");
       expect(await textPost.extractOpenGraphProperties()).toMatchObject({
         "og:site_name": "Lenster",
+      });
+    });
+
+    test("Then it should mention the originating app in Twitter Card `site` if a Twitter handle is provided in the app manifest", async ({
+      textPost,
+    }) => {
+      await textPost.openAsSharedBy("lenster");
+
+      expect(await textPost.getTitle()).toContain("Lenster");
+      expect(await textPost.extractOpenGraphProperties()).toMatchObject({
+        "og:site_name": "Lenster",
+      });
+      expect(await textPost.extractTwitterMetaTags()).toMatchObject({
+        "twitter:site": "lensterxyz",
       });
     });
   });
@@ -88,7 +126,7 @@ test.describe("Given a Publication link with `by` attribution", async () => {
       await textPost.openAsSharedBy("orb");
 
       await expect(textPost.attribution).toHaveText("Orb");
-      await expect(textPost.options).toHaveText(["Lenster", "Memester"]);
+      await expect(textPost.options).toHaveText(["Lenster"]);
     });
   });
 });

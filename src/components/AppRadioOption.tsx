@@ -9,7 +9,7 @@ export function AppRadioOption({ app }: AppRadioOptionProps) {
   return (
     <label className="flex flex-row flex-grow items-center p-2 hover:bg-gray-200 dark:hover:bg-gray-400 rounded-lg cursor-pointer">
       <input type="radio" name="appId" className="mr-2" value={app.appId} />
-      <img className="w-8 h-8 mr-2" src={app.icon} alt={app.name} />
+      <img className="w-8 h-8 mr-2" src={app.icon} alt={app.name} width={56} height={56} />
       <span className="text-gray-800 font-medium dark:text-white">{app.name}</span>
     </label>
   );

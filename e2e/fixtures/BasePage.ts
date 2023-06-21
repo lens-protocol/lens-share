@@ -3,6 +3,7 @@ import never from "never";
 import { Metadata } from "next";
 
 export type OpenGraphMetadata = NonNullable<Metadata["openGraph"]>;
+export type TwitterCardMetadata = NonNullable<Metadata["twitter"]>;
 
 export abstract class BasePage {
   readonly options: Locator;
@@ -31,6 +32,30 @@ export abstract class BasePage {
 
       return acc;
     }, {} as OpenGraphMetadata);
+  }
+
+  async extractTwitterMetaTags(): Promise<TwitterCardMetadata> {
+    const metaTags = await this.page.locator('meta[name^="twitter:"]').all();
+
+    const pairs = await Promise.all(
+      metaTags.map(async (tag) => ({
+        name: (await tag.getAttribute("name")) ?? never(),
+        content: (await tag.getAttribute("content")) ?? never(),
+      }))
+    );
+
+    return pairs.reduce((acc, { name, content }) => {
+      if (name && content) {
+        // @ts-ignore
+        acc[name] = content;
+      }
+
+      return acc;
+    }, {} as TwitterCardMetadata);
+  }
+
+  async getTitle() {
+    return await this.page.title();
   }
 
   async open() {
