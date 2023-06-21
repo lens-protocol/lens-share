@@ -80,6 +80,12 @@ export const AppManifestSchema = z.object({
   platform: PlatformTypeSchema,
   icon: z.string().url(),
   routes: RoutesSchema,
+  twitter: z
+    .string({
+      description:
+        "The Twitter handle of the app/project. Used for attribution in Twitter Card meta tags.",
+    })
+    .optional(),
 });
 
 export type AppManifest = z.infer<typeof AppManifestSchema>;

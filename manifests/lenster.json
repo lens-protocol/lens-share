@@ -13,5 +13,6 @@
       "url": "https://lenster.xyz/posts/:id",
       "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
     }
-  }
+  },
+  "twitter": "lensterxyz"
 }
