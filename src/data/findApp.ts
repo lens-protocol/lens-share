@@ -3,7 +3,7 @@ import { hasJustOne } from "@lens-protocol/shared-kernel";
 import { PlatformType } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
-import { fetchAllApps } from "./fetchAllApps";
+import { fetchAllApps } from "./storage";
 
 export type FindAppRequest = {
   appId: string;
