@@ -136,12 +136,14 @@ function isMediaWithCoverImage(media: MediaSetFragment) {
   return media.original.cover !== null;
 }
 
-async function extractImages(metadata: MetadataFragment): Promise<OGImageDescriptor[]> {
-  return Promise.all(
-    metadata.media
-      .filter((media) => isImageMediaSet(media) || isMediaWithCoverImage(media))
-      .map(({ original }) => mediaToOpenGraphImage(original))
+async function extractImage(metadata: MetadataFragment): Promise<OGImageDescriptor | null> {
+  const media = metadata.media.find(
+    (media) => isImageMediaSet(media) || isMediaWithCoverImage(media)
   );
+
+  if (!media) return null;
+
+  return mediaToOpenGraphImage(media.original);
 }
 
 export async function generateMetadata(
@@ -163,7 +165,7 @@ export async function generateMetadata(
   const { openGraph } = await parent;
   const siteName = attribution?.name ?? openGraph?.siteName ?? undefined;
 
-  const images = await extractImages(metadata);
+  const image = await extractImage(metadata);
 
   return {
     title,
@@ -174,14 +176,14 @@ export async function generateMetadata(
       url: `/p/${publication.id}`,
       type: "article",
       siteName,
-      images,
+      images: image ?? undefined,
     },
     twitter: {
       title,
       description,
-      card: images.length ? "summary_large_image" : "summary",
+      card: image ? "summary_large_image" : "summary",
       site: attribution?.twitter ?? twitterHandle,
-      images: images.map(({ url }) => ({ url })),
+      images: image?.url ?? undefined,
     },
   };
 }
