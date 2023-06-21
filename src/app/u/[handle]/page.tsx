@@ -46,7 +46,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">
-            Open {formatProfileHandle(profile.handle)} profile with
+            {`Open ${formatProfileHandle(profile.handle)} profile with:`}
           </h2>
 
           {attribution && (

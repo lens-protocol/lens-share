@@ -66,8 +66,6 @@ export abstract class BasePage {
     await this.page.goto(`${this.path}?by=${appId}`);
   }
 
-  async waitRedirect() {}
-
   async justOnce(label: string) {
     await this.page.getByLabel(label).click();
     await this.page.getByRole("button", { name: "Just once" }).click();
