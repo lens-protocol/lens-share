@@ -58,7 +58,9 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">
-            Open {publication.__typename} by {formatProfileHandle(publication.profile.handle)} with
+            {`Open ${publication.__typename} by ${formatProfileHandle(
+              publication.profile.handle
+            )} with:`}
           </h2>
 
           {attribution && (
@@ -121,7 +123,7 @@ function formatPageTitle(publication: PublicationFragment, attribution: AppManif
   if (attribution) {
     return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)} on ${
       attribution.name
-    }}`;
+    }`;
   }
   return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`;
 }
