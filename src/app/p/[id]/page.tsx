@@ -1,10 +1,11 @@
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
-import { AppRadioOption } from "@/app/components/AppRadioOption";
 import { resolvePlatformType } from "@/app/device";
-import { SelectionMode } from "@/app/types";
+import { SearchParams, SelectionMode } from "@/app/types";
+import { AppRadioOption } from "@/components/AppRadioOption";
 import { findPublicationApps, findApp, findFavoriteApp } from "@/data";
+import { formatProfileHandle } from "@/formatters";
 
 import { openWith } from "./actions";
 import { redirectTo } from "./redirect";
@@ -13,9 +14,7 @@ export type PublicationPageProps = {
   params: {
     id: string;
   };
-  searchParams: {
-    by?: string;
-  };
+  searchParams: SearchParams;
 };
 
 export default async function PublicationPage({ params, searchParams }: PublicationPageProps) {
@@ -30,24 +29,25 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
   if (!publication) notFound();
 
-  const options = await findPublicationApps({
-    platform,
-    exclude: searchParams.by,
-  });
-
   const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
+
+  const options = await findPublicationApps({
+    publication,
+    platform,
+    exclude: attribution?.appId,
+  });
 
   return (
     <div className="fixed inset-0 flex items-end justify-center">
       <form
         action={openWith}
-        className="bg-white dark:bg-slate-800 rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
+        className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
       >
         <input type="hidden" name="publicationId" value={publication.id} />
 
         <div className="p-4">
-          <h2 className="text-xl font-bold mb-4 dark:text-white">
-            Open {publication.__typename} by @{publication.profile.handle} with
+          <h2 className="text-xl font-bold mb-4">
+            Open {publication.__typename} by {formatProfileHandle(publication.profile.handle)} with
           </h2>
 
           {attribution && (
@@ -96,6 +96,6 @@ export async function generateMetadata({ params }: PublicationPageProps) {
   if (!publication) notFound();
 
   return {
-    title: `${publication.__typename} by @${publication.profile.handle}`,
+    title: `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`,
   };
 }
