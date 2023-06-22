@@ -1,3 +1,5 @@
+import { ProfileFragment } from "@lens-protocol/client";
+import truncateMarkdown from "markdown-truncate";
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
@@ -89,12 +91,37 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
   );
 }
 
+function formatPageDescription(profile: ProfileFragment) {
+  return profile.bio
+    ? truncateMarkdown(profile.bio, {
+        limit: 100,
+        ellipsis: true,
+      })
+    : undefined;
+}
+
 export async function generateMetadata({ params }: ProfilePageProps) {
   const profile = await client.profile.fetch({ handle: params.handle });
 
   if (!profile) notFound();
 
+  const title = `${formatProfileHandle(profile.handle)} profile`;
+
+  const description = formatPageDescription(profile);
+
   return {
-    title: `${formatProfileHandle(profile.handle)} profile`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/u/${profile.handle}`,
+      type: "profile",
+    },
+    twitter: {
+      title,
+      description,
+      card: "summary_large_image",
+    },
   };
 }

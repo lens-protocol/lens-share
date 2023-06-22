@@ -3,7 +3,7 @@ import { ThirdwebStorage } from "@thirdweb-dev/storage";
 // First, instantiate the thirdweb IPFS storage
 const storage = new ThirdwebStorage();
 
-export async function resolveMediaUrl(url: string) {
+export function resolveMediaUrl(url: string) {
   if (url.startsWith("ipfs://")) {
     return storage.resolveScheme(url);
   }

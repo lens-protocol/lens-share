@@ -37,7 +37,7 @@ test.describe("Given a Profile link with `by` attribution", async () => {
   });
 });
 
-test.describe("Given a Profile link", async () => {
+test.describe("Given an opened Profile link", async () => {
   test.describe("When submitting an app choice with the 'Just once' button", async () => {
     test("Then it should open the publication with the selected app", async ({ anyProfile }) => {
       await anyProfile.open();
