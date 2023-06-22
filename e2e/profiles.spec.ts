@@ -17,7 +17,9 @@ test.describe("Given a Profile link", async () => {
       ]);
     });
   });
+});
 
+test.describe("Given a Publication link posted on a social media website/app", async () => {
   test.describe("When checking Open Graph meta tags", async () => {
     test("Then it should render the expected base-line meta tags", async ({
       baseURL,
