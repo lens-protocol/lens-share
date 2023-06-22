@@ -50,15 +50,17 @@ export default async function Image({ params }: ImageProps) {
     return new ImageResponse(
       (
         <div tw="flex w-full h-full flex-col justify-stretch bg-stone-700 items-stretch">
-          <div tw="flex-3 flex flex-row bg-white justify-stretch overflow-hidden">
-            {cover && <img src={cover} tw="flex object-cover h-full" />}
+          <div tw="flex-3 flex flex-row bg-yellow-100 justify-stretch overflow-hidden">
+            {cover && <img src={cover} tw="flex object-cover h-full w-full" />}
           </div>
           <div tw="flex-2 flex flex-col justify-center relative px-10">
             <div
               tw="flex absolute right-10 top-0 h-[300px] w-[300px] bg-stone-700 rounded-full p-3"
               style={{ transform: "translateY(-50%)" }}
             >
-              {picture && <img src={picture} tw="object-contain h-full rounded-full" />}
+              <div tw="flex flex-row justify-center w-full h-full bg-yellow-100 rounded-full ">
+                {picture && <img src={picture} tw="object-contain h-full rounded-full" />}
+              </div>
             </div>
             <p tw="flex leading-none text-stone-400 text-[32px] font-normal align-middle">
               {formatProfileHandle(profile.handle)}
@@ -70,7 +72,7 @@ export default async function Image({ params }: ImageProps) {
         </div>
       ),
       {
-        // 2:1 aspect ratio so to work also as Twitter Card summary_large_image
+        // 2:1 aspect ratio so to work also as image for Twitter Card summary_large_image
         width: 800,
         height: 400,
         fonts: [
