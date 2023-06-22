@@ -4,22 +4,18 @@ import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
-import { resolvePlatformType } from "@/app/device";
 import { SearchParams, SelectionMode } from "@/app/types";
 import { AppRadioOption } from "@/components/AppRadioOption";
 import { twitterHandle } from "@/config";
-import { findPublicationApps, findApp, findFavoriteApp, AppManifest } from "@/data";
+import { findPublicationApps, findFavoriteApp, AppManifest } from "@/data";
 import { formatProfileHandle } from "@/formatters";
+import { resolvePlatformType } from "@/utils/device";
 import { isImageType } from "@/utils/media";
 import { OGImageDescriptor, mediaToOpenGraphImage } from "@/utils/metadata";
+import { resolveAttribution } from "@/utils/request";
 
 import { openWith } from "./actions";
 import { redirectTo } from "./redirect";
-
-async function resolveAttribution({ by }: SearchParams): Promise<AppManifest | null> {
-  const platform = resolvePlatformType();
-  return by ? await findApp({ appId: by, platform }) : null;
-}
 
 export type PublicationPageProps = {
   params: {

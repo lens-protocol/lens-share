@@ -2,7 +2,7 @@
 
 import { invariant } from "@lens-protocol/shared-kernel";
 
-import { resolvePlatformType } from "@/app/device";
+import { resolvePlatformType } from "@/utils/device";
 import { SelectionMode } from "@/app/types";
 import { findApp, saveFavoriteApp } from "@/data";
 
