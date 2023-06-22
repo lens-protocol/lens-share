@@ -1,25 +1,44 @@
 name: Playwright Tests
+
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  deployment_status:
+
 jobs:
-  test:
-    timeout-minutes: 60
+  run-e2es:
+    if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github.event) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+          echo "$VERCEL_BRANCH_URL"
+
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2.2.4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 16
+          node-version-file: ".nvmrc"
+          cache: "pnpm"
+
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
+
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
+
       - name: Run Playwright tests
-        run: pnpm exec playwright test
-      - uses: actions/upload-artifact@v3
+        run: pnpm run test
+        env:
+          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-report
