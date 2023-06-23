@@ -117,13 +117,10 @@ test.describe("Given a Video Publication link", async () => {
 
 test.describe("Given a Publication link with `by` attribution", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app separate from other options", async ({
-      textPost,
-    }) => {
-      await textPost.openAsSharedBy("orb");
+    test("Then it should show the originating app first", async ({ videoPost }) => {
+      await videoPost.openAsSharedBy("lenstube");
 
-      await expect(textPost.attribution).toHaveText("Orb");
-      await expect(textPost.options).toHaveText(["Lenster"]);
+      await expect(videoPost.options).toHaveText(["Lenstube", "Lenster"]);
     });
   });
 });

@@ -1,12 +1,13 @@
 import { AppId, PlatformType, RouteKind } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
-import { byMobilePlatformFirst } from "./comparators";
+import { byMobilePlatformFirst, withPriorityTo } from "./comparators";
+import { webOnly } from "./predicates";
 import { fetchAllApps } from "./storage";
 
 export type FindProfileAppsRequest = {
   platform: PlatformType;
-  exclude?: AppId;
+  priorityTo?: AppId;
 };
 
 function supportsProfileRoute(app: AppManifest) {
@@ -19,15 +20,13 @@ export async function findProfileApps(
   const apps = await fetchAllApps();
 
   if (request.platform === PlatformType.Web) {
-    return apps.filter(
-      (app) =>
-        app.appId !== request.exclude &&
-        app.platform === PlatformType.Web &&
-        supportsProfileRoute(app)
-    );
+    return apps
+      .filter((app) => webOnly(app) && supportsProfileRoute(app))
+      .sort(withPriorityTo(request.priorityTo));
   }
 
   return apps
-    .filter((app) => app.appId !== request.exclude && supportsProfileRoute(app))
-    .sort(byMobilePlatformFirst);
+    .filter(supportsProfileRoute)
+    .sort(byMobilePlatformFirst)
+    .sort(withPriorityTo(request.priorityTo));
 }

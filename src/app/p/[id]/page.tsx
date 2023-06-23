@@ -41,61 +41,51 @@ export default async function PublicationPage({ params, searchParams }: Publicat
   const options = await findPublicationApps({
     publication,
     platform,
-    exclude: attribution?.appId,
+    priorityTo: attribution?.appId,
   });
 
   return (
-    <div className="fixed inset-0 flex items-end justify-center">
-      <form
-        action={openWith}
-        className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
-      >
-        <input type="hidden" name="publicationId" value={publication.id} />
+    <form action={openWith}>
+      <input type="hidden" name="publicationId" value={publication.id} />
 
-        <div className="p-4">
-          <h2 className="text-xl font-bold mb-4">
-            {`Open ${publication.__typename} by ${formatProfileHandle(
-              publication.profile.handle
-            )} with:`}
-          </h2>
+      <div className="fixed inset-0 flex items-end justify-center">
+        <div className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto">
+          <div className="p-4">
+            <h2 className="text-xl font-bold mb-4">
+              {`Open ${publication.__typename} by ${formatProfileHandle(
+                publication.profile.handle
+              )} with:`}
+            </h2>
 
-          {attribution && (
-            <>
-              <div className="p-2 space-y-2" data-testid="attribution">
-                <AppRadioOption app={attribution} />
-              </div>
-              {options.length > 0 && <p>or use:</p>}
-            </>
-          )}
-
-          {options.length > 0 && (
-            <ul className="space-y-2">
-              {options.map((app) => (
-                <li key={app.appId} className="flex items-center px-2">
-                  <AppRadioOption app={app} />
-                </li>
-              ))}
-            </ul>
-          )}
+            {options.length > 0 && (
+              <ul className="space-y-2">
+                {options.map((app) => (
+                  <li key={app.appId} className="flex items-center px-2">
+                    <AppRadioOption app={app} />
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+          <div className="bg-gray-100 dark:bg-slate-700 p-4 flex justify-end gap-4">
+            <button
+              className="text-gray-800 dark:text-white font-medium uppercase transform"
+              name="mode"
+              value={SelectionMode.Always}
+            >
+              Always
+            </button>
+            <button
+              className="text-gray-800 dark:text-white font-medium uppercase transform"
+              name="mode"
+              value={SelectionMode.JustOnce}
+            >
+              Just Once
+            </button>
+          </div>
         </div>
-        <div className="bg-gray-100 dark:bg-slate-700 p-4 flex justify-end gap-4">
-          <button
-            className="text-gray-800 dark:text-white font-medium uppercase transform"
-            name="mode"
-            value={SelectionMode.Always}
-          >
-            Always
-          </button>
-          <button
-            className="text-gray-800 dark:text-white font-medium uppercase transform"
-            name="mode"
-            value={SelectionMode.JustOnce}
-          >
-            Just Once
-          </button>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   );
 }
 

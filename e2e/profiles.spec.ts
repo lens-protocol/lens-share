@@ -77,15 +77,12 @@ test.describe("Given a Publication link posted on a social media website/app", a
 
 test.describe("Given a Profile link with `by` attribution", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app separate from other options", async ({
-      anyProfile,
-    }) => {
-      await anyProfile.openAsSharedBy("orb");
+    test("Then it should show the originating app first", async ({ anyProfile }) => {
+      await anyProfile.openAsSharedBy("lenster");
 
-      await expect(anyProfile.attribution).toHaveText("Orb");
       await expect(anyProfile.options).toHaveText([
-        "Lens Profile",
         "Lenster",
+        "Lens Profile",
         "Lenstube",
         "Memester",
       ]);

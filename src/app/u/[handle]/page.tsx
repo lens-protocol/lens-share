@@ -38,7 +38,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
   const options = await findProfileApps({
     platform,
-    exclude: attribution?.appId,
+    priorityTo: attribution?.appId,
   });
 
   return (
@@ -53,15 +53,6 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
           <h2 className="text-xl font-bold mb-4">
             {`Open ${formatProfileHandle(profile.handle)} profile with:`}
           </h2>
-
-          {attribution && (
-            <>
-              <div className="p-2 space-y-2" data-testid="attribution">
-                <AppRadioOption app={attribution} />
-              </div>
-              {options.length > 0 && <p>or use:</p>}
-            </>
-          )}
 
           {options.length > 0 && (
             <ul className="space-y-2">

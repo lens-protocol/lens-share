@@ -1,4 +1,4 @@
-import { PlatformType } from "@/app/types";
+import { AppId, PlatformType } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
 
@@ -12,4 +12,22 @@ export function byMobilePlatformFirst(a: AppManifest, b: AppManifest) {
   }
 
   return 0;
+}
+
+export function withPriorityTo(appId: AppId | undefined) {
+  return (a: AppManifest, b: AppManifest) => {
+    if (appId === undefined) {
+      return 0;
+    }
+
+    if (a.appId === appId) {
+      return -1;
+    }
+
+    if (b.appId === appId) {
+      return +1;
+    }
+
+    return 0;
+  };
 }
