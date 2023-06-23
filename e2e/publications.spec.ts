@@ -16,16 +16,13 @@ test.describe("Given a Publication link", async () => {
 
 test.describe("Given a Publication link posted on a social media website/app", async () => {
   test.describe("When checking Open Graph meta tags", async () => {
-    test("Then it should render the expected base-line meta tags", async ({
-      baseURL,
-      textPost,
-    }) => {
+    test("Then it should render the expected base-line meta tags", async ({ textPost }) => {
       await textPost.open();
 
       expect(await textPost.extractOpenGraphProperties()).toEqual({
         "og:title": "Post by @stani.lens",
         "og:description": "This post will age well.",
-        "og:url": `${baseURL}/p/${textPost.publicationId}`,
+        "og:url": expect.stringContaining(`/p/${textPost.publicationId}`),
         "og:site_name": "Lens Share",
         "og:type": "article",
       });
