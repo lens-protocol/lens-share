@@ -19,6 +19,65 @@ test.describe("Given a Profile link", async () => {
   });
 });
 
+test.describe("Given a Publication link posted on a social media website/app", async () => {
+  test.describe("When checking Open Graph meta tags", async () => {
+    test("Then it should render the expected base-line meta tags", async ({
+      baseURL,
+      anyProfile,
+    }) => {
+      await anyProfile.open();
+
+      expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
+        "og:title": `@${anyProfile.handle} profile`,
+        "og:description": "The Social Layer of Web3 🌿",
+        "og:url": `${baseURL}/u/${anyProfile.handle}`,
+        "og:site_name": "Lens Share",
+        "og:type": "profile",
+      });
+    });
+
+    test("Then it should include the expected Twitter Card meta tags", async ({ anyProfile }) => {
+      await anyProfile.open();
+
+      expect(await anyProfile.extractTwitterMetaTags()).toEqual({
+        "twitter:card": "summary_large_image",
+        "twitter:site": "LensProtocol",
+        "twitter:title": `@${anyProfile.handle} profile`,
+        "twitter:description": "The Social Layer of Web3 🌿",
+        "twitter:image": expect.any(String),
+        "twitter:image:type": "image/png",
+      });
+    });
+  });
+
+  test.describe("When the link includes the `by` attribution param", async () => {
+    test("Then it should mention the originating app in page `title` and Open Graph `site_name` tag", async ({
+      anyProfile,
+    }) => {
+      await anyProfile.openAsSharedBy("lenster");
+
+      expect(await anyProfile.getTitle()).toContain("Lenster");
+      expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
+        "og:site_name": "Lenster",
+      });
+    });
+
+    test("Then it should mention the originating app in Twitter Card `site` if a Twitter handle is provided in the app manifest", async ({
+      anyProfile,
+    }) => {
+      await anyProfile.openAsSharedBy("lenster");
+
+      expect(await anyProfile.getTitle()).toContain("Lenster");
+      expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
+        "og:site_name": "Lenster",
+      });
+      expect(await anyProfile.extractTwitterMetaTags()).toMatchObject({
+        "twitter:site": "lensterxyz",
+      });
+    });
+  });
+});
+
 test.describe("Given a Profile link with `by` attribution", async () => {
   test.describe("When opening it", async () => {
     test("Then it should show the originating app separate from other options", async ({
@@ -37,7 +96,7 @@ test.describe("Given a Profile link with `by` attribution", async () => {
   });
 });
 
-test.describe("Given a Profile link", async () => {
+test.describe("Given an opened Profile link", async () => {
   test.describe("When submitting an app choice with the 'Just once' button", async () => {
     test("Then it should open the publication with the selected app", async ({ anyProfile }) => {
       await anyProfile.open();
