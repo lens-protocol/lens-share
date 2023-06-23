@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Test
 
 on:
   deployment_status:
@@ -8,13 +8,6 @@ jobs:
     if: github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success'
     runs-on: ubuntu-latest
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github.event) }}
-        run: |
-          echo "$GITHUB_CONTEXT"
-          echo "$VERCEL_BRANCH_URL"
-
       - uses: actions/checkout@v3
 
       - name: Setup pnpm
