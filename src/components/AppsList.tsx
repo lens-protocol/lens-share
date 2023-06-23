@@ -15,22 +15,24 @@ export function AppsList({ attribution, options }: AppsListProps) {
 
   return (
     <div className="flex flex-col justify-between items-center gap-8 sm:gap-10">
-      <p className="text-xl font-bold text-white text-center">Open with Lens app…</p>
+      <div>
+        {cannotUseOriginatingApp && (
+          <p className="text-gray-500 text-sm text-center" data-testid="context">
+            Shared via{" "}
+            <a
+              className="font-bold hover:underline"
+              href={attribution.routes.home}
+              rel="nofollow"
+              target="_blank"
+            >
+              {attribution.name}
+            </a>{" "}
+            mobile app.
+          </p>
+        )}
 
-      {cannotUseOriginatingApp && (
-        <p data-testid="context">
-          Shared via{" "}
-          <a
-            className="font-bold hover:underline"
-            href={attribution.routes.home}
-            rel="nofollow"
-            target="_blank"
-          >
-            {attribution.name}
-          </a>
-          , mobile-only app.
-        </p>
-      )}
+        <p className="text-xl font-bold text-white text-center">Open with Lens app…</p>
+      </div>
 
       <ol className="flex flex-row flex-wrap justify-around gap-4">
         {options.map((app) => (

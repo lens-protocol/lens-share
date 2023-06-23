@@ -97,7 +97,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
     }) => {
       await anyProfile.openAsSharedBy("orb");
 
-      await expect(anyProfile.context).toHaveText("Shared via Orb, mobile-only app.");
+      await expect(anyProfile.context).toHaveText("Shared via Orb mobile app.");
     });
   });
 });

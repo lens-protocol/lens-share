@@ -130,7 +130,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     }) => {
       await videoPost.openAsSharedBy("orb");
 
-      await expect(videoPost.context).toHaveText("Shared via Orb, mobile-only app.");
+      await expect(videoPost.context).toHaveText("Shared via Orb mobile app.");
     });
   });
 });
