@@ -2,15 +2,13 @@ import { promises as fs } from "fs";
 import * as path from "path";
 
 import { PromiseResult, Result, assertError, failure, success } from "@lens-protocol/shared-kernel";
-import never from "never";
 import { cache } from "react";
+
+import { manifestsDir } from "@/config";
 
 import { AppManifest, AppManifestSchema } from "./AppManifestSchema";
 
-const folderPath = path.join(
-  process.cwd(),
-  process.env.MANIFESTS_DIR ?? never("MANIFESTS_DIR env var not set")
-);
+const folderPath = path.join(process.cwd(), manifestsDir);
 
 async function listManifestFiles() {
   const files = await fs.readdir(folderPath);

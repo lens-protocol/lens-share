@@ -1,11 +1,16 @@
+import { ProfileFragment } from "@lens-protocol/client";
+import truncateMarkdown from "markdown-truncate";
+import { ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
-import { resolvePlatformType } from "@/app/device";
 import { SearchParams, SelectionMode } from "@/app/types";
 import { AppRadioOption } from "@/components/AppRadioOption";
-import { findApp, findFavoriteApp, findProfileApps } from "@/data";
+import { twitterHandle } from "@/config";
+import { AppManifest, findApp, findFavoriteApp, findProfileApps } from "@/data";
 import { formatProfileHandle } from "@/formatters";
+import { resolvePlatformType } from "@/utils/device";
+import { resolveAttribution } from "@/utils/request";
 
 import { openWith } from "./actions";
 import { redirectTo } from "./redirect";
@@ -46,7 +51,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">
-            Open {formatProfileHandle(profile.handle)} profile with
+            {`Open ${formatProfileHandle(profile.handle)} profile with:`}
           </h2>
 
           {attribution && (
@@ -89,12 +94,54 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
   );
 }
 
-export async function generateMetadata({ params }: ProfilePageProps) {
+function formatPageTitle(profile: ProfileFragment, attribution: AppManifest | null) {
+  if (attribution) {
+    return `${formatProfileHandle(profile.handle)} profile  • ${attribution.name}`;
+  }
+  return `${formatProfileHandle(profile.handle)} profile`;
+}
+
+function formatPageDescription(profile: ProfileFragment) {
+  return profile.bio
+    ? truncateMarkdown(profile.bio, {
+        limit: 100,
+        ellipsis: true,
+      })
+    : undefined;
+}
+
+export async function generateMetadata(
+  { params, searchParams }: ProfilePageProps,
+  parent: ResolvingMetadata
+) {
   const profile = await client.profile.fetch({ handle: params.handle });
 
   if (!profile) notFound();
 
+  const attribution = await resolveAttribution(searchParams);
+
+  const title = formatPageTitle(profile, attribution);
+
+  const description = formatPageDescription(profile);
+
+  const { openGraph } = await parent;
+  const siteName = attribution?.name ?? openGraph?.siteName ?? undefined;
+
   return {
-    title: `${formatProfileHandle(profile.handle)} profile`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/u/${profile.handle}`,
+      type: "profile",
+      siteName,
+    },
+    twitter: {
+      title,
+      description,
+      card: "summary_large_image",
+      site: attribution?.twitter ?? twitterHandle,
+    },
   };
 }

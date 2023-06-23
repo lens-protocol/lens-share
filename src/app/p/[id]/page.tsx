@@ -1,11 +1,18 @@
+import { MediaSetFragment, MetadataFragment, PublicationFragment } from "@lens-protocol/client";
+import truncateMarkdown from "markdown-truncate";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 
 import { client } from "@/app/client";
-import { resolvePlatformType } from "@/app/device";
 import { SearchParams, SelectionMode } from "@/app/types";
 import { AppRadioOption } from "@/components/AppRadioOption";
-import { findPublicationApps, findApp, findFavoriteApp } from "@/data";
+import { twitterHandle } from "@/config";
+import { findPublicationApps, findFavoriteApp, AppManifest } from "@/data";
 import { formatProfileHandle } from "@/formatters";
+import { resolvePlatformType } from "@/utils/device";
+import { isImageType } from "@/utils/media";
+import { OGImageDescriptor, mediaToOpenGraphImage } from "@/utils/metadata";
+import { resolveAttribution } from "@/utils/request";
 
 import { openWith } from "./actions";
 import { redirectTo } from "./redirect";
@@ -29,7 +36,7 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
   if (!publication) notFound();
 
-  const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
+  const attribution = await resolveAttribution(searchParams);
 
   const options = await findPublicationApps({
     publication,
@@ -47,7 +54,9 @@ export default async function PublicationPage({ params, searchParams }: Publicat
 
         <div className="p-4">
           <h2 className="text-xl font-bold mb-4">
-            Open {publication.__typename} by {formatProfileHandle(publication.profile.handle)} with
+            {`Open ${publication.__typename} by ${formatProfileHandle(
+              publication.profile.handle
+            )} with:`}
           </h2>
 
           {attribution && (
@@ -90,12 +99,87 @@ export default async function PublicationPage({ params, searchParams }: Publicat
   );
 }
 
-export async function generateMetadata({ params }: PublicationPageProps) {
+function resolveMetadata(publication: PublicationFragment): MetadataFragment {
+  if (publication.__typename === "Mirror") {
+    return publication.mirrorOf.metadata;
+  }
+  return publication.metadata;
+}
+
+function formatPageDescription(metadata: MetadataFragment) {
+  return metadata.content
+    ? truncateMarkdown(metadata.content, {
+        limit: 100,
+        ellipsis: true,
+      })
+    : undefined;
+}
+
+function formatPageTitle(publication: PublicationFragment, attribution: AppManifest | null) {
+  if (attribution) {
+    return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)} on ${
+      attribution.name
+    }`;
+  }
+  return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`;
+}
+
+function isImageMediaSet(media: MediaSetFragment) {
+  return media.original.mimeType && isImageType(media.original.mimeType);
+}
+
+function isMediaWithCoverImage(media: MediaSetFragment) {
+  return media.original.cover !== null;
+}
+
+async function extractImage(metadata: MetadataFragment): Promise<OGImageDescriptor | null> {
+  const media = metadata.media.find(
+    (media) => isImageMediaSet(media) || isMediaWithCoverImage(media)
+  );
+
+  if (!media) return null;
+
+  return mediaToOpenGraphImage(media.original);
+}
+
+export async function generateMetadata(
+  { params, searchParams }: PublicationPageProps,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const publication = await client.publication.fetch({ publicationId: params.id });
 
   if (!publication) notFound();
 
+  const attribution = await resolveAttribution(searchParams);
+
+  const metadata = resolveMetadata(publication);
+
+  const title = formatPageTitle(publication, attribution);
+
+  const description = formatPageDescription(metadata);
+
+  const { openGraph } = await parent;
+  const siteName = attribution?.name ?? openGraph?.siteName ?? undefined;
+
+  const image = await extractImage(metadata);
+
   return {
-    title: `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/p/${publication.id}`,
+      type: "article",
+      siteName,
+      images: image ?? undefined,
+    },
+    twitter: {
+      title,
+      description,
+      card: image ? "summary_large_image" : "summary",
+      site: attribution?.twitter ?? twitterHandle,
+      images: image?.url ?? undefined,
+    },
   };
 }

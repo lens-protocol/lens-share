@@ -1,4 +1,9 @@
 import { Locator, Page } from "@playwright/test";
+import never from "never";
+import { Metadata } from "next";
+
+export type OpenGraphMetadata = NonNullable<Metadata["openGraph"]>;
+export type TwitterCardMetadata = NonNullable<Metadata["twitter"]>;
 
 export abstract class BasePage {
   readonly options: Locator;
@@ -9,6 +14,50 @@ export abstract class BasePage {
     this.attribution = page.getByTestId("attribution");
   }
 
+  async extractOpenGraphProperties(): Promise<OpenGraphMetadata> {
+    const metaTags = await this.page.locator('meta[property^="og:"]').all();
+
+    const pairs = await Promise.all(
+      metaTags.map(async (tag) => ({
+        property: (await tag.getAttribute("property")) ?? never(),
+        content: (await tag.getAttribute("content")) ?? never(),
+      }))
+    );
+
+    return pairs.reduce((acc, { property, content }) => {
+      if (property && content) {
+        // @ts-ignore
+        acc[property] = content;
+      }
+
+      return acc;
+    }, {} as OpenGraphMetadata);
+  }
+
+  async extractTwitterMetaTags(): Promise<TwitterCardMetadata> {
+    const metaTags = await this.page.locator('meta[name^="twitter:"]').all();
+
+    const pairs = await Promise.all(
+      metaTags.map(async (tag) => ({
+        name: (await tag.getAttribute("name")) ?? never(),
+        content: (await tag.getAttribute("content")) ?? never(),
+      }))
+    );
+
+    return pairs.reduce((acc, { name, content }) => {
+      if (name && content) {
+        // @ts-ignore
+        acc[name] = content;
+      }
+
+      return acc;
+    }, {} as TwitterCardMetadata);
+  }
+
+  async getTitle() {
+    return await this.page.title();
+  }
+
   async open() {
     return await this.page.goto(this.path);
   }
@@ -16,8 +65,6 @@ export abstract class BasePage {
   async openAsSharedBy(appId: string) {
     await this.page.goto(`${this.path}?by=${appId}`);
   }
-
-  async waitRedirect() {}
 
   async justOnce(label: string) {
     await this.page.getByLabel(label).click();
