@@ -13,7 +13,7 @@ const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
   })
   .min(3)
   .max(16)
-  .regex(/^[a-z][a-z0-9]+$/i)
+  .regex(/^[a-z0-9]+$/i)
   .transform((value) => value as AppId);
 
 const ProfileUrlSchema = z.object(
@@ -70,15 +70,37 @@ const RoutesSchema = z.object({
   [RouteKind.Publication]: PublicationUrlSchema.optional(),
 });
 
+const IconUrlSchema = z.union([
+  z
+    .string({
+      description:
+        "The URL to the app icon. Favour SVGs over rasterized formats. If rasterized ensures it renders sharp at 192x192 resolution.",
+    })
+    .url(),
+  z
+    .string({
+      description: "The absolute path for an icon hosted on this web app.",
+    })
+    .startsWith("/icons/"),
+]);
+
+const HexColorSchema = z
+  .string({
+    description: "A CSS color in RGB hexadecimal notation (e.g. #f09, #ff0099)",
+  })
+  .regex(/^#([0-9a-fA-F]{3}){1,2}$/);
+
+const IconSchema = z.object({
+  url: IconUrlSchema,
+  background: HexColorSchema,
+});
+
 export const AppManifestSchema = z.object({
   appId: AppIdSchema,
   name: z.string({ description: "A human readable name for the app/project." }).min(3).max(36),
-  description: z
-    .string({ description: "A brief description of the app/project." })
-    .min(20)
-    .max(200),
+  description: z.string({ description: "A brief description of the app/project." }).max(200),
   platform: PlatformTypeSchema,
-  icon: z.string().url(),
+  icon: IconSchema,
   routes: RoutesSchema,
   twitter: z
     .string({

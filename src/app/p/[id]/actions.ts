@@ -2,7 +2,6 @@
 
 import { invariant } from "@lens-protocol/shared-kernel";
 
-import { SelectionMode } from "@/app/types";
 import { findApp, saveFavoriteApp } from "@/data";
 import { resolvePlatformType } from "@/utils/device";
 
@@ -18,10 +17,7 @@ export async function openWith(data: FormData) {
   const app = await findApp({ appId, platform: resolvePlatformType() });
   invariant(app !== null, "App not found");
 
-  const mode =
-    data.get("mode") === SelectionMode.JustOnce ? SelectionMode.JustOnce : SelectionMode.Always;
-
-  if (mode === SelectionMode.Always) {
+  if (data.has("remember")) {
     await saveFavoriteApp(app);
   }
 

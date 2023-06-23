@@ -11,11 +11,6 @@ export enum RouteKind {
   Publication = "publication",
 }
 
-export enum SelectionMode {
-  JustOnce = "justOnce",
-  Always = "always",
-}
-
 export type SearchParams = {
   by?: string;
 };

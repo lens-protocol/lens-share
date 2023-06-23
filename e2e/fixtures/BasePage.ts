@@ -10,7 +10,7 @@ export abstract class BasePage {
   readonly context: Locator;
 
   constructor(private readonly page: Page, private readonly path: string) {
-    this.options = page.locator("ul > li > label");
+    this.options = page.locator("ol > li");
     this.context = page.getByTestId("context");
   }
 
@@ -66,15 +66,14 @@ export abstract class BasePage {
     await this.page.goto(`${this.path}?by=${appId}`);
   }
 
-  async justOnce(label: string) {
-    await this.page.getByLabel(label).click();
-    await this.page.getByRole("button", { name: "Just once" }).click();
+  async justOnce(name: string) {
+    await this.page.getByRole("button", { name }).click();
     return this.waitForRedirect();
   }
 
-  async always(label: string) {
-    await this.page.getByLabel(label).click();
-    await this.page.getByRole("button", { name: "Always" }).click();
+  async remember(name: string) {
+    await this.page.getByRole("checkbox", { name: "Remember for 2 weeks" }).check();
+    await this.page.getByRole("button", { name }).click();
     return this.waitForRedirect();
   }
 

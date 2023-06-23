@@ -136,7 +136,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
 });
 
 test.describe("Given an opened Publication link", async () => {
-  test.describe("When submitting an app choice with the 'Just once' button", async () => {
+  test.describe("When submitting an app choice", async () => {
     test("Then it should open the publication with the selected app", async ({ textPost }) => {
       await textPost.open();
       const url = await textPost.justOnce("Lenster");
@@ -145,10 +145,10 @@ test.describe("Given an opened Publication link", async () => {
     });
   });
 
-  test.describe("When submitting an app choice with the 'Always' button", async () => {
+  test.describe("When submitting an app choice with 'Remember' checkbox selected", async () => {
     test("Then it should use the same app for all future publications", async ({ textPost }) => {
       await textPost.open();
-      await textPost.always("Lenster");
+      await textPost.remember("Lenster");
 
       const response = await textPost.open();
 
