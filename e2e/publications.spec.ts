@@ -115,12 +115,22 @@ test.describe("Given a Video Publication link", async () => {
   });
 });
 
-test.describe("Given a Publication link with `by` attribution", async () => {
+test.describe("Given a Publication link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app first", async ({ videoPost }) => {
+    test("Then it should show the specified app first", async ({ videoPost }) => {
       await videoPost.openAsSharedBy("lenstube");
 
       await expect(videoPost.options).toHaveText(["Lenstube", "Lenster"]);
+    });
+  });
+
+  test.describe("When opening it on a platform not supported by the specified app", async () => {
+    test("Then it should show a message an attribution message before offering other options", async ({
+      videoPost,
+    }) => {
+      await videoPost.openAsSharedBy("orb");
+
+      await expect(videoPost.context).toHaveText("Shared via Orb, mobile-only app.");
     });
   });
 });

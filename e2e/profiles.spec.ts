@@ -75,9 +75,9 @@ test.describe("Given a Publication link posted on a social media website/app", a
   });
 });
 
-test.describe("Given a Profile link with `by` attribution", async () => {
+test.describe("Given a Profile link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app first", async ({ anyProfile }) => {
+    test("Then it should show the specified app first", async ({ anyProfile }) => {
       await anyProfile.openAsSharedBy("lenster");
 
       await expect(anyProfile.options).toHaveText([
@@ -86,6 +86,16 @@ test.describe("Given a Profile link with `by` attribution", async () => {
         "Lenstube",
         "Memester",
       ]);
+    });
+  });
+
+  test.describe("When opening it on a platform not supported by the specified app", async () => {
+    test("Then it should show a message an attribution message before offering other options", async ({
+      anyProfile,
+    }) => {
+      await anyProfile.openAsSharedBy("orb");
+
+      await expect(anyProfile.context).toHaveText("Shared via Orb, mobile-only app.");
     });
   });
 });

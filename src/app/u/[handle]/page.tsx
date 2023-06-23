@@ -50,6 +50,21 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
         <input type="hidden" name="handle" value={profile.handle} />
 
         <div className="p-4">
+          {attribution && (
+            <p data-testid="context">
+              Shared via{" "}
+              <a
+                className="font-bold hover:underline"
+                href={attribution.routes.home}
+                rel="nofollow"
+                target="_blank"
+              >
+                {attribution.name}
+              </a>
+              , mobile-only app.
+            </p>
+          )}
+
           <h2 className="text-xl font-bold mb-4">
             {`Open ${formatProfileHandle(profile.handle)} profile with:`}
           </h2>

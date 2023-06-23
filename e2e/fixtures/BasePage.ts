@@ -7,9 +7,11 @@ export type TwitterCardMetadata = NonNullable<Metadata["twitter"]>;
 
 export abstract class BasePage {
   readonly options: Locator;
+  readonly context: Locator;
 
   constructor(private readonly page: Page, private readonly path: string) {
     this.options = page.locator("ul > li > label");
+    this.context = page.getByTestId("context");
   }
 
   async extractOpenGraphProperties(): Promise<OpenGraphMetadata> {

@@ -51,6 +51,21 @@ export default async function PublicationPage({ params, searchParams }: Publicat
       <div className="fixed inset-0 flex items-end justify-center">
         <div className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto">
           <div className="p-4">
+            {attribution && (
+              <p data-testid="context">
+                Shared via{" "}
+                <a
+                  className="font-bold hover:underline"
+                  href={attribution.routes.home}
+                  rel="nofollow"
+                  target="_blank"
+                >
+                  {attribution.name}
+                </a>
+                , mobile-only app.
+              </p>
+            )}
+
             <h2 className="text-xl font-bold mb-4">
               {`Open ${publication.__typename} by ${formatProfileHandle(
                 publication.profile.handle
