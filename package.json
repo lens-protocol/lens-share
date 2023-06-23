@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:dev": "playwright test --ui",
-    "test:ci": "playwright test"
+    "test": "playwright test"
   },
   "dependencies": {
     "@lens-protocol/client": "1.2.0-next.1",

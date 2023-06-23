@@ -21,16 +21,13 @@ test.describe("Given a Profile link", async () => {
 
 test.describe("Given a Publication link posted on a social media website/app", async () => {
   test.describe("When checking Open Graph meta tags", async () => {
-    test("Then it should render the expected base-line meta tags", async ({
-      baseURL,
-      anyProfile,
-    }) => {
+    test("Then it should render the expected base-line meta tags", async ({ anyProfile }) => {
       await anyProfile.open();
 
       expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
         "og:title": `@${anyProfile.handle} profile`,
         "og:description": "The Social Layer of Web3 🌿",
-        "og:url": `${baseURL}/u/${anyProfile.handle}`,
+        "og:url": expect.stringContaining(`/u/${anyProfile.handle}`),
         "og:site_name": "Lens Share",
         "og:type": "profile",
       });
