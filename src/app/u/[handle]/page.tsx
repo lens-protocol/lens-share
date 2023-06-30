@@ -42,16 +42,11 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
   });
 
   return (
-    <div className="fixed inset-0 flex items-end justify-center">
-      <form
-        action={openWith}
-        className="bg-darkDandelion rounded-t-lg overflow-hidden shadow-lg w-full sm:w-auto"
-      >
-        <input type="hidden" name="handle" value={profile.handle} />
+    <form action={openWith}>
+      <input type="hidden" name="handle" value={profile.handle} />
 
-        <AppsList attribution={attribution} options={options} />
-      </form>
-    </div>
+      <AppsList attribution={attribution} options={options} />
+    </form>
   );
 }
 
