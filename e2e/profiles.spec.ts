@@ -10,10 +10,11 @@ test.describe("Given a Profile link", async () => {
       await anyProfile.open();
 
       await expect(anyProfile.options).toHaveText([
-        "Lens Profile",
+        "LensFrens",
         "Lenster",
         "Lenstube",
         "Memester",
+        "Riff",
       ]);
     });
   });
@@ -75,26 +76,34 @@ test.describe("Given a Publication link posted on a social media website/app", a
   });
 });
 
-test.describe("Given a Profile link with `by` attribution", async () => {
+test.describe("Given a Profile link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app separate from other options", async ({
+    test("Then it should show the specified app first", async ({ anyProfile }) => {
+      await anyProfile.openAsSharedBy("lenster");
+
+      await expect(anyProfile.options).toHaveText([
+        "Lenster",
+        "LensFrens",
+        "Lenstube",
+        "Memester",
+        "Riff",
+      ]);
+    });
+  });
+
+  test.describe("When opening it on a platform not supported by the specified app", async () => {
+    test("Then it should show a message an attribution message before offering other options", async ({
       anyProfile,
     }) => {
       await anyProfile.openAsSharedBy("orb");
 
-      await expect(anyProfile.attribution).toHaveText("Orb");
-      await expect(anyProfile.options).toHaveText([
-        "Lens Profile",
-        "Lenster",
-        "Lenstube",
-        "Memester",
-      ]);
+      await expect(anyProfile.context).toHaveText("Shared via Orb mobile app.");
     });
   });
 });
 
 test.describe("Given an opened Profile link", async () => {
-  test.describe("When submitting an app choice with the 'Just once' button", async () => {
+  test.describe("When submitting an app choice", async () => {
     test("Then it should open the publication with the selected app", async ({ anyProfile }) => {
       await anyProfile.open();
       const url = await anyProfile.justOnce("Lenster");
@@ -103,10 +112,10 @@ test.describe("Given an opened Profile link", async () => {
     });
   });
 
-  test.describe("When submitting an app choice with the 'Always' button", async () => {
+  test.describe("When submitting an app choice with 'Remember' checkbox selected", async () => {
     test("Then it should use the same app for all future publications", async ({ anyProfile }) => {
       await anyProfile.open();
-      await anyProfile.always("Lenster");
+      await anyProfile.remember("Lenster");
 
       const response = await anyProfile.open();
 

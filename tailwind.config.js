@@ -1,3 +1,4 @@
+const colors = require("tailwindcss/colors");
 const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
@@ -9,27 +10,12 @@ module.exports = {
   ],
   theme: {
     colors: {
-      none: "#FFFFFF0",
-      blackWood: "#272E29",
-      darkSky: "#464646",
-      shade: "#383838",
-      lightSky: "#DCDCDC",
-      darkForest: "#3D4B41",
+      transparent: "transparent",
+      white: colors.white,
+      black: colors.black,
       lightForest: "#C3E4CD",
-      darkAzalea: "#5A4E4C",
-      lightAzalea: "#F5D4D2",
-      darkLavender: "#565467",
-      lightLavender: "#DBCCF3",
-      lightDandelion: "#D0DBFF",
-      darkDandelion: "#474B57",
-      paleSunflower: "#FFEBB8",
-      dustyMiller: "#E9E9E9",
-      velvet: "#360C0C",
-      transparent: "#transparent",
-      gray: "#939399",
-      dark: "#000000",
-      light: "#FFFFFF",
-      x: "#FF0000", // for dev purposes
+      darkForest: "#3D4B41",
+      blackWood: "#272E29",
     },
     fontFamily: {
       sans: ["var(--font-ginto)", ...defaultTheme.fontFamily.sans],

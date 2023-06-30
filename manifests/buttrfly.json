@@ -3,7 +3,10 @@
   "name": "Buttrfly",
   "description": "You own your data. The social media you deserve.",
   "platform": "mobile",
-  "icon": "https://buttrfly.app/buttrfly-icon-rounded.png",
+  "icon": {
+    "url": "https://buttrfly.app/buttrfly-icon-rounded.png",
+    "background": "#111111"
+  },
   "routes": {
     "home": "https://buttrfly.app/",
     "profile": {

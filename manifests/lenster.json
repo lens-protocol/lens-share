@@ -3,7 +3,10 @@
   "name": "Lenster",
   "description": "Lenster is a composable, decentralized, and permission-less social media web app built with Lens Protocol 🌿",
   "platform": "web",
-  "icon": "https://lenster.xyz/logo.svg",
+  "icon": {
+    "url": "https://lenster.xyz/logo.svg",
+    "background": "#000"
+  },
   "routes": {
     "home": "https://lenster.xyz/",
     "profile": {

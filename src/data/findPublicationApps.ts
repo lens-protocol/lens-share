@@ -4,7 +4,8 @@ import { Overwrite } from "@lens-protocol/shared-kernel";
 import { AppId, PlatformType, RouteKind } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
-import { byMobilePlatformFirst } from "./comparators";
+import { byMobilePlatformFirst, withPriorityTo } from "./comparators";
+import { webOnly } from "./predicates";
 import { fetchAllApps } from "./storage";
 
 type WithPublicationRoute<T extends AppManifest> = Overwrite<
@@ -34,7 +35,6 @@ function resolvePublicationMainContentFocus(
 
 type FetchRelevantAppsRequest = {
   publication: PublicationFragment;
-  exclude?: AppId;
 };
 
 async function fetchRelevantApps(request: FetchRelevantAppsRequest): Promise<Array<AppManifest>> {
@@ -44,16 +44,14 @@ async function fetchRelevantApps(request: FetchRelevantAppsRequest): Promise<Arr
 
   return apps.filter(
     (app) =>
-      app.appId !== request.exclude &&
-      supportsPublicationRoute(app) &&
-      app.routes.publication.supports.includes(mainContentFocus)
+      supportsPublicationRoute(app) && app.routes.publication.supports.includes(mainContentFocus)
   );
 }
 
 export type FindPublicationAppsRequest = {
   platform: PlatformType;
   publication: PublicationFragment;
-  exclude?: AppId;
+  priorityTo?: AppId;
 };
 
 export async function findPublicationApps(
@@ -62,8 +60,8 @@ export async function findPublicationApps(
   const apps = await fetchRelevantApps(request);
 
   if (request.platform === PlatformType.Web) {
-    return apps.filter((app) => app.platform === PlatformType.Web);
+    return apps.filter(webOnly).sort(withPriorityTo(request.priorityTo));
   }
 
-  return apps.sort(byMobilePlatformFirst);
+  return apps.sort(byMobilePlatformFirst).sort(withPriorityTo(request.priorityTo));
 }

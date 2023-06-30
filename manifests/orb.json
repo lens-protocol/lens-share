@@ -3,7 +3,10 @@
   "name": "Orb",
   "description": "Decentralized professional social media app with an end-to-end on-chain credibility system; connecting companies, projects, and people; built with Lens protocol on Polygon chain.",
   "platform": "mobile",
-  "icon": "https://orb.ac/assets/orb-logo-black.svg",
+  "icon": {
+    "url": "https://orb.ac/assets/orb-logo-white.png",
+    "background": "#181818"
+  },
   "routes": {
     "home": "https://orb.ac/",
     "profile": {

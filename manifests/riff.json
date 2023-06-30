@@ -1,0 +1,20 @@
+{
+  "appId": "beats",
+  "name": "Riff",
+  "description": "Music is Social",
+  "platform": "web",
+  "icon": {
+    "url": "https://pbs.twimg.com/profile_images/1615156694274932737/E36ykNY5_400x400.jpg",
+    "background": "#000"
+  },
+  "routes": {
+    "home": "https://www.riffapp.xyz/",
+    "profile": {
+      "url": "https://www.riffapp.xyz/profile/:handle"
+    },
+    "publication": {
+      "url": "https://www.riffapp.xyz/post/:id",
+      "supports": ["AUDIO"]
+    }
+  }
+}

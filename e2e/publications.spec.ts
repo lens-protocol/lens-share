@@ -115,21 +115,28 @@ test.describe("Given a Video Publication link", async () => {
   });
 });
 
-test.describe("Given a Publication link with `by` attribution", async () => {
+test.describe("Given a Publication link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
-    test("Then it should show the originating app separate from other options", async ({
-      textPost,
-    }) => {
-      await textPost.openAsSharedBy("orb");
+    test("Then it should show the specified app first", async ({ videoPost }) => {
+      await videoPost.openAsSharedBy("lenstube");
 
-      await expect(textPost.attribution).toHaveText("Orb");
-      await expect(textPost.options).toHaveText(["Lenster"]);
+      await expect(videoPost.options).toHaveText(["Lenstube", "Lenster"]);
+    });
+  });
+
+  test.describe("When opening it on a platform not supported by the specified app", async () => {
+    test("Then it should show a message an attribution message before offering other options", async ({
+      videoPost,
+    }) => {
+      await videoPost.openAsSharedBy("orb");
+
+      await expect(videoPost.context).toHaveText("Shared via Orb mobile app.");
     });
   });
 });
 
 test.describe("Given an opened Publication link", async () => {
-  test.describe("When submitting an app choice with the 'Just once' button", async () => {
+  test.describe("When submitting an app choice", async () => {
     test("Then it should open the publication with the selected app", async ({ textPost }) => {
       await textPost.open();
       const url = await textPost.justOnce("Lenster");
@@ -138,10 +145,10 @@ test.describe("Given an opened Publication link", async () => {
     });
   });
 
-  test.describe("When submitting an app choice with the 'Always' button", async () => {
+  test.describe("When submitting an app choice with 'Remember' checkbox selected", async () => {
     test("Then it should use the same app for all future publications", async ({ textPost }) => {
       await textPost.open();
-      await textPost.always("Lenster");
+      await textPost.remember("Lenster");
 
       const response = await textPost.open();
 
