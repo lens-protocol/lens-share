@@ -5,7 +5,6 @@
   "platform": "web",
   "icon": {
     "url": "https://ipfs.filebase.io/ipfs/QmeT6Ekrb7xxUUZ6steARbujszzz7rN1LUKNfhXdZvp3Ma",
-    "_url": "https://app.lensta.xyz/favicon.png",
     "background": "#000"
   },
   "routes": {
