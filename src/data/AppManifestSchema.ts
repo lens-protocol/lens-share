@@ -112,4 +112,4 @@ export const AppManifestSchema = z.object({
 
 export type AppManifest = z.infer<typeof AppManifestSchema>;
 
-export const AppManifestJsonSchema = zodToJsonSchema(AppManifestSchema);
+export const AppManifestJsonSchema = zodToJsonSchema(AppManifestSchema, { target: "jsonSchema7" });

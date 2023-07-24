@@ -16,7 +16,6 @@ The primary purpose of this repository is to implement the [LIP-3](https://githu
   - [Profile Lens Share Link](#profile-lens-share-link)
 - [Lens Share UI](#lens-share-ui)
 - [Lens Share App Manifest](#lens-share-app-manifest)
-  - [JSON Schema `$id`](#json-schema-id)
 - [Contributing](#contributing)
   - [Development workflow](#development-workflow)
   - [Add your app manifest](#add-your-app-manifest)
@@ -79,19 +78,7 @@ The Lens Share UI is also responsible to render [Open Graph](https://ogp.me/) an
 
 Lens Share App Manifest is a specification app metadata (e.g. name, description, routes, etc.) that is used by the Lens Share UI to show the list of apps the user can choose from when opening an Lens Share Link.
 
-### JSON Schema `$id`
-
-Every App Manifest MUST pass the App Manifest JSON Schema validation.
-
-You can add the following JSON Schema `$id` to your App Manifest to have a better DX as well as inform any JSON schema validation tool to what schema your App Manifest is conforming to:
-
-```json
-{
-  "$id": "https://share.lens.xyz/schemas/1.0.0/app-manifest"
-  "name": "My Lens App",
-  "appId": "my-lens-app"
-}
-```
+Every App Manifest MUST be validated with the JSON Schema: https://share.lens.xyz/schemas/1.0.0/app-manifest
 
 ## Contributing
 
@@ -109,7 +96,17 @@ After cloning the repo, run `pnpm install` to fetch its dependencies. Then you c
 
 ### Add your app manifest
 
-[TBD]
+- Fork this repository
+- Install the dependencies with `pnpm install`
+- Add your app manifest to the `manifests` folder
+- Run the app locally with `pnpm dev`. The app is available at `http://localhost:3000/u/<your-handle>.lens`, or `http://localhost:3000/p/<your-publication-id>`
+- Test thoroughly your configuration by:
+  - opening Lens Share links with web and mobile browser and verify your app shows in the list as expected
+  - opening Lens Share links with `?by=<your-app-id>` parameter to verify your app is prioritized as expected
+- Amend the tests in the `e2e` folder to include your app name in the expected lists
+  - run the app on one terminal with `pnpm dev`
+  - verify tests pass on another terminal with `pnpm test`
+- Commit your changes and open a PR against this repository
 
 ## License
 

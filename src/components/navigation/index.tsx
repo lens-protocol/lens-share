@@ -8,7 +8,7 @@ export function Navigation() {
   return (
     <nav className="bg-gradient-to-b from-[#3f4944] to-[#2a3530] p-[1px] rounded-full">
       <h1 className="sr-only">Main navigation</h1>
-      <div className="bg-[#2a3530] rounded-full h-12 px-3 sm:h-14 sm:px-4 flex flex-row gap-4 sm:gap-8 items-center ">
+      <div className="bg-[#2a3530] rounded-full h-14 px-3 flex flex-row gap-4 sm:gap-8 items-center ">
         <Logo className="text-lightForest" responsive />
 
         <div className="sm:hidden">
@@ -28,9 +28,13 @@ export function Navigation() {
 
             <div className="flex flex-col h-full justify-between items-stretch text-darkForest">
               <div className="flex flex-col justify-start gap-6 items-start text-2xl">
-                <NavLink href="https://www.lens.xyz">Lens</NavLink>
+                <NavLink href="https://www.lens.xyz/community">Community</NavLink>
 
-                <NavLink href="https://www.lens.xyz/garden">Developers</NavLink>
+                <NavLink href="https://www.lens.xyz/creators">Creators</NavLink>
+
+                <NavLink href="https://www.lens.xyz/build">Devs</NavLink>
+
+                <NavLink href="https://www.lens.xyz/social-layer">Web3</NavLink>
               </div>
 
               <NavButton size="lg" variant="dark" href="https://claim.lens.xyz/">
@@ -41,9 +45,13 @@ export function Navigation() {
         </div>
 
         <div className="hidden sm:flex flex-row gap-8 justify-between items-center text-lightForest text-sm">
-          <NavLink href="https://www.lens.xyz">Lens</NavLink>
+          <NavLink href="https://www.lens.xyz/community">Community</NavLink>
 
-          <NavLink href="https://www.lens.xyz/garden">Developers</NavLink>
+          <NavLink href="https://www.lens.xyz/creators">Creators</NavLink>
+
+          <NavLink href="https://www.lens.xyz/build">Devs</NavLink>
+
+          <NavLink href="https://www.lens.xyz/social-layer">Web3</NavLink>
 
           <NavButton size="md" variant="light" href="https://claim.lens.xyz/">
             Claim handle

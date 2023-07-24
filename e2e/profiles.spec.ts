@@ -9,13 +9,7 @@ test.describe("Given a Profile link", async () => {
     test("Then it should show relevant app options", async ({ anyProfile }) => {
       await anyProfile.open();
 
-      await expect(anyProfile.options).toHaveText([
-        "LensFrens",
-        "Lenster",
-        "Lenstube",
-        "Memester",
-        "Riff",
-      ]);
+      await expect(anyProfile.options).toHaveText(["LensFrens", "Lenster", "Lenstube", "Riff"]);
     });
   });
 });
@@ -81,13 +75,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
     test("Then it should show the specified app first", async ({ anyProfile }) => {
       await anyProfile.openAsSharedBy("lenster");
 
-      await expect(anyProfile.options).toHaveText([
-        "Lenster",
-        "LensFrens",
-        "Lenstube",
-        "Memester",
-        "Riff",
-      ]);
+      await expect(anyProfile.options).toHaveText(["Lenster", "LensFrens", "Lenstube", "Riff"]);
     });
   });
 
