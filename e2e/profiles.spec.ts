@@ -10,6 +10,7 @@ test.describe("Given a Profile link", async () => {
       await anyProfile.open();
 
       await expect(anyProfile.options).toHaveText([
+        "Buttrfly",
         "LensFrens",
         "Lensta",
         "Lenster",
@@ -84,6 +85,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
 
       await expect(anyProfile.options).toHaveText([
         "Lenster",
+        "Buttrfly",
         "LensFrens",
         "Lensta",
         "Lenstube",

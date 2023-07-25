@@ -9,7 +9,7 @@ test.describe("Given a Publication link", async () => {
     test("Then it should show relevant app options", async ({ imagePost }) => {
       await imagePost.open();
 
-      await expect(imagePost.options).toHaveText(["Collectz", "Lensta", "Lenster", "Soclly"]);
+      await expect(imagePost.options).toHaveText(["Buttrfly", "Collectz", "Lensta", "Lenster", "Soclly"]);
     });
   });
 });
@@ -110,7 +110,7 @@ test.describe("Given a Video Publication link", async () => {
     }) => {
       await videoPost.open();
 
-      await expect(videoPost.options).toHaveText(["Lenster", "Lenstube", "Soclly"]);
+      await expect(videoPost.options).toHaveText(["Buttrfly", "Lenster", "Lenstube", "Soclly"]);
     });
   });
 });
@@ -120,7 +120,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show the specified app first", async ({ videoPost }) => {
       await videoPost.openAsSharedBy("lenstube");
 
-      await expect(videoPost.options).toHaveText(["Lenstube", "Lenster", "Soclly"]);
+      await expect(videoPost.options).toHaveText(["Lenstube", "Buttrfly", "Lenster", "Soclly"]);
     });
   });
 
