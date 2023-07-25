@@ -1,0 +1,21 @@
+{
+  "appId": "lensta",
+  "name": "Lensta",
+  "description": "Explore & engage with visual content on Lens",
+  "platform": "web",
+  "icon": {
+    "url": "https://ipfs.filebase.io/ipfs/QmeT6Ekrb7xxUUZ6steARbujszzz7rN1LUKNfhXdZvp3Ma",
+    "background": "#000"
+  },
+  "routes": {
+    "home": "https://app.lensta.xyz/",
+    "profile": {
+      "url": "https://app.lensta.xyz/profile/:handle"
+    },
+    "publication": {
+      "url": "https://app.lensta.xyz/post/:id",
+      "supports": ["ARTICLE", "IMAGE", "LINK", "TEXT_ONLY"]
+    }
+  },
+  "twitter": "lenstaxyz"
+}
