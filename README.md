@@ -105,7 +105,7 @@ After cloning the repo, run `pnpm install` to fetch its dependencies. Then you c
   - opening Lens Share links with `?by=<your-app-id>` parameter to verify your app is prioritized as expected
 - Amend the tests in the `e2e` folder to include your app name in the expected lists
   - run the app on one terminal with `pnpm dev`
-  - verify tests pass on another terminal with `pnpm test`
+  - verify tests pass on another terminal with `BASE_URL=http://localhost:3000 pnpm test`
 - Commit your changes and open a PR against this repository
 
 ## License
