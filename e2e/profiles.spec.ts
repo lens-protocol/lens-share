@@ -15,6 +15,7 @@ test.describe("Given a Profile link", async () => {
         "Lenster",
         "Lenstube",
         "Riff",
+        "Soclly",
       ]);
     });
   });
@@ -87,6 +88,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
         "Lensta",
         "Lenstube",
         "Riff",
+        "Soclly",
       ]);
     });
   });

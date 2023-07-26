@@ -2,6 +2,12 @@ name: Test
 
 on:
   deployment_status:
+  workflow_dispatch:
+    inputs:
+      target_url:
+        description: "Target URL"
+        required: true
+        default: ""
 
 jobs:
   run-e2es:
@@ -28,7 +34,7 @@ jobs:
       - name: Run Playwright tests
         run: pnpm run test
         env:
-          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          PLAYWRIGHT_TEST_BASE_URL: ${{ inputs.target_url || github.event.deployment_status.target_url }}
 
       - name: Upload Playwright report
         uses: actions/upload-artifact@v3
