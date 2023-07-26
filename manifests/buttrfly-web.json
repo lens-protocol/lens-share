@@ -2,7 +2,7 @@
   "appId": "buttrfly",
   "name": "Buttrfly",
   "description": "Web3 Social Explorer",
-  "platform": "mobile",
+  "platform": "web",
   "icon": {
     "url": "https://buttrfly.app/buttrfly-icon-rounded.png",
     "background": "#111111"

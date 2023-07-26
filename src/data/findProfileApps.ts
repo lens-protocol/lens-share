@@ -2,7 +2,7 @@ import { AppId, PlatformType, RouteKind } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
 import { byMobilePlatformFirst, withPriorityTo } from "./comparators";
-import { webOnly } from "./predicates";
+import { dedupe, webOnly } from "./predicates";
 import { fetchAllApps } from "./storage";
 
 export type FindProfileAppsRequest = {
@@ -28,5 +28,6 @@ export async function findProfileApps(
   return apps
     .filter(supportsProfileRoute)
     .sort(byMobilePlatformFirst)
+    .filter(dedupe())
     .sort(withPriorityTo(request.priorityTo));
 }

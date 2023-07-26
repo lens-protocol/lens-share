@@ -1,0 +1,21 @@
+{
+    "appId": "soclly",
+    "name": "Soclly",
+    "description": "A Decentralized Social Network with a Gateway of Freedom for Creators",
+    "platform": "web",
+    "icon": {
+      "url": "https://assets.soclly.com/images/logos/soclly.png",
+      "background": "#000"
+    },
+    "routes": {
+      "home": "https://soclly.com",
+      "profile": {
+        "url": "https://app.soclly.com/u/:handle"
+      },
+      "publication": {
+        "url": "https://app.soclly.com/posts/:id",
+        "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+      }
+    }
+  }
+  
