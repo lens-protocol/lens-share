@@ -7,6 +7,7 @@ export function resolveMediaUrl(url: string) {
   if (url.startsWith("ipfs://")) {
     return storage.resolveScheme(url);
   }
+
   return url;
 }
 

@@ -41,8 +41,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Image
           className="object-cover -z-10"
           alt=""
-          src="/illustrations/forest.png"
+          src="/illustrations/forest.jpg"
           fill
+          quality={90}
           aria-hidden
         />
       </body>
