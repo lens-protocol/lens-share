@@ -31,6 +31,8 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "og:url": expect.stringContaining(`/p/${textPost.publicationId}`),
         "og:site_name": "Lens Share",
         "og:type": "article",
+        "og:image": expect.stringContaining("/illustrations/opengraph-image.png"),
+        "og:image:type": "image/png",
       });
     });
 
