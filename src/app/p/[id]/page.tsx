@@ -126,7 +126,10 @@ export async function generateMetadata(
       url: `/p/${publication.id}`,
       type: "article",
       siteName,
-      images: image ?? undefined,
+      images: image ?? {
+        url: "/illustrations/opengraph-image.png",
+        type: "image/png",
+      },
     },
     twitter: {
       title,
