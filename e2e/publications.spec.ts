@@ -110,7 +110,7 @@ test.describe("Given a Video Publication link", async () => {
     }) => {
       await videoPost.open();
 
-      await expect(videoPost.options).toHaveText(["Lenster", "Lenstube", "Soclly"]);
+      await expect(videoPost.options).toHaveText(["Collectz", "Lenster", "Lenstube", "Soclly"]);
     });
   });
 });
@@ -120,7 +120,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show the specified app first", async ({ videoPost }) => {
       await videoPost.openAsSharedBy("lenstube");
 
-      await expect(videoPost.options).toHaveText(["Lenstube", "Lenster", "Soclly"]);
+      await expect(videoPost.options).toHaveText(["Lenstube", "Collectz", "Lenster", "Soclly"]);
     });
   });
 
