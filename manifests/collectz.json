@@ -5,13 +5,16 @@
   "platform": "web",
   "icon": {
     "url": "https://bitcloutweb.azureedge.net/public/lens/images/Icon250.png",
-    "background": "#E5E5E5"
+    "background": "#000"
   },
   "routes": {
     "home": "https://collectz.xyz/",
+    "profile": {
+      "url": "https://collectz.xyz/u/:handle"
+    },
     "publication": {
       "url": "https://collectz.xyz/c/:id",
-      "supports": ["IMAGE"]
+      "supports": ["IMAGE","AUDIO","VIDEO"]
     }
   },
   "twitter": "nftz_me"
