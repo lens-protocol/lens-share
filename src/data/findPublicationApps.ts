@@ -5,7 +5,7 @@ import { AppId, PlatformType, RouteKind } from "@/app/types";
 
 import { AppManifest } from "./AppManifestSchema";
 import { byMobilePlatformFirst, withPriorityTo } from "./comparators";
-import { webOnly } from "./predicates";
+import { dedupe, webOnly } from "./predicates";
 import { fetchAllApps } from "./storage";
 
 type WithPublicationRoute<T extends AppManifest> = Overwrite<
@@ -63,5 +63,5 @@ export async function findPublicationApps(
     return apps.filter(webOnly).sort(withPriorityTo(request.priorityTo));
   }
 
-  return apps.sort(byMobilePlatformFirst).sort(withPriorityTo(request.priorityTo));
+  return apps.sort(byMobilePlatformFirst).filter(dedupe()).sort(withPriorityTo(request.priorityTo));
 }
