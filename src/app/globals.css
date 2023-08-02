@@ -34,6 +34,10 @@ body {
     @apply font-gintoNord text-[36px] font-medium leading-[35px] tracking-[-2px] lg:text-[50px] lg:leading-[50px];
   }
 
+  .header-six {
+    @apply font-gintoNord text-[40px] font-medium leading-[38px] tracking-[-2px];
+  }
+
   .t2 {
     @apply lg:text-[30px] lg:leading-[30px] lg:tracking-[-1.2px];
   }
