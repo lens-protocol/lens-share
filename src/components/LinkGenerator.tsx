@@ -4,10 +4,7 @@ import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 
-import { getLink } from "@/app/actions";
-
 import Spinner from "./Spinner";
-
 
 /* eslint-disable @next/next/no-img-element */
 type LinkData = { linkType: { type: "profile" | "publication" | "unknown"; url?: string } };
