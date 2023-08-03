@@ -1,5 +1,6 @@
-import { getLink } from "@/app/actions";
 import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/solid";
+
+import { getLink } from "@/app/actions";
 
 /* eslint-disable @next/next/no-img-element */
 
