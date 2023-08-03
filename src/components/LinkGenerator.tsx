@@ -1,10 +1,15 @@
 "use client";
 
 import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
+import { debounce } from "lodash";
+import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 
 import Spinner from "./Spinner";
+
+const isValidURL = (url: string) => {
+  return url.startsWith("https://") || url.startsWith("http://");
+};
 
 /* eslint-disable @next/next/no-img-element */
 type LinkData = { linkType: { type: "profile" | "publication" | "unknown"; url?: string } };
@@ -13,12 +18,9 @@ export function LinkGenerator({}) {
   const [link, setLink] = useState("");
   const [newLink, setNewLink] = useState<string | undefined>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLinkGood, setIsLinkGood] = useState<boolean>(false);
 
-  const onChangeLink = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLink(e.target.value);
-  };
-
-  const generateLink = async () => {
+  const generateLink = async (link: string) => {
     try {
       const response = await fetch("/api/link", {
         method: "POST",
@@ -35,17 +37,48 @@ export function LinkGenerator({}) {
       const data: LinkData = await response.json();
 
       if (data.linkType.type === "unknown") {
-        toast.error("Link not supported");
-        return;
-      }
+        setIsLinkGood(false);
 
-      setNewLink(data.linkType.url ?? undefined);
+        return;
+      } else {
+        setIsLinkGood(true);
+        setNewLink(data.linkType.url ?? undefined);
+      }
     } catch (error) {
       console.error("Error generating link:", error);
     } finally {
       setIsLoading(false);
     }
   };
+
+  const debouncedGenerateLink = debounce(generateLink, 2400);
+
+  const onChangeLink = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLink(e.target.value);
+
+    if (e.target.value.length > 20 && isValidURL(e.target.value)) {
+      setIsLoading(true);
+      debouncedGenerateLink(e.target.value);
+    } else {
+      setNewLink("");
+    }
+  };
+
+  const onPasteLink = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    const pastedContent = e.clipboardData.getData("text");
+
+    setLink(pastedContent);
+    setIsLoading(true);
+    debouncedGenerateLink(pastedContent);
+  };
+
+  useEffect(() => {
+    if (link.length < 20 || !isValidURL(link)) {
+      setNewLink("");
+    }
+  }, [link]);
 
   return (
     <div className="flex flex-col justify-between items-center gap-8 sm:gap-10">
@@ -62,9 +95,10 @@ export function LinkGenerator({}) {
             placeholder="Add a post/profile link from any Lens app..."
             value={link}
             onChange={onChangeLink}
+            onPaste={onPasteLink}
           />
 
-          {newLink ? (
+          {isLinkGood && newLink && link.length > 20 ? (
             <CheckIcon className="text-lightForest h-6 w-6 absolute right-4 top-4" />
           ) : null}
 
@@ -76,7 +110,7 @@ export function LinkGenerator({}) {
         </label>
       </div>
 
-      {newLink ? (
+      {isLinkGood && newLink && link.length > 20 ? (
         <div className="flex flex-col w-full items-start gap-2 font-gintoNord font-medium text-[16px]">
           <p className="text-lightForest">Copy and share your universal Lens Share link</p>
 
@@ -93,13 +127,6 @@ export function LinkGenerator({}) {
           </button>
         </div>
       ) : null}
-
-      <button
-        onClick={generateLink}
-        className="bg-lightForest text-darkForest font-gintoNord w-full p-3 rounded-xl font-medium uppercase hover:opacity-95"
-      >
-        Generate link
-      </button>
     </div>
   );
 }
