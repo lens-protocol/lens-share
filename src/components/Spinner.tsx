@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { FC } from "react";
+import React from "react";
 
 type Props = {
   color?: string;
