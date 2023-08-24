@@ -127,6 +127,19 @@ export function LinkGenerator({}) {
           </button>
         </div>
       ) : null}
+
+      {!isLinkGood && link.length > 20 ? (
+        <div className="w-full">
+          <p className="text-lg">We are sorry we couldn't build a Lens Share Link at this time.</p>
+
+          <p className="opacity-90 mt-2">
+            You can however build it manually adopting one of these patterns:
+          </p>
+
+          <p className="opacity-80 mt-2">https://share.lens.xyz/u/</p>
+          <p className="opacity-80">https://share.lens.xyz/p/</p>
+        </div>
+      ) : null}
     </div>
   );
 }
