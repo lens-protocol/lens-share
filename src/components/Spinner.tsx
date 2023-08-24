@@ -1,25 +1,23 @@
-import clsx from 'clsx'
-import React, { FC } from 'react'
+import clsx from "clsx";
+import React, { FC } from "react";
 
 type Props = {
-  color?: string
-  size?: string
-}
+  color?: string;
+  size?: string;
+};
 
-const Spinner: FC<Props> = ({ color, size }) => {
+export const Spinner: FC<Props> = ({ color, size }) => {
   return (
     <span role="status">
       <svg
         aria-hidden="true"
         className={clsx(
-          `text-lightSky animate-spin ${
-            color ? `fill-${color}` : 'fill-blackWood'
-          }`,
+          `text-lightSky animate-spin ${color ? `fill-${color}` : "fill-blackWood"}`,
           {
-            'w-4 h-4': !size || size === 'sm',
-            'w-8 h-8': size === 'md',
-            'w-12 h-12': size === 'lg',
-            'w-24 h-24': size === 'xl',
+            "w-4 h-4": !size || size === "sm",
+            "w-8 h-8": size === "md",
+            "w-12 h-12": size === "lg",
+            "w-24 h-24": size === "xl",
           }
         )}
         viewBox="0 0 100 101"
@@ -36,7 +34,5 @@ const Spinner: FC<Props> = ({ color, size }) => {
         />
       </svg>
     </span>
-  )
-}
-
-export default Spinner
+  );
+};

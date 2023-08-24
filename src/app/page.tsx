@@ -2,12 +2,12 @@
 
 /* eslint-disable @next/next/no-img-element */
 
-import Spinner from "@/components/Spinner";
 import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/solid";
 import { debounce } from "lodash";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { AppId } from "./types";
+import { Spinner } from "@/components/Spinner";
 
 const isValidURL = (url: string) => {
   return url.startsWith("https://") || url.startsWith("http://");
