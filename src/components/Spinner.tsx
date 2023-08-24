@@ -6,7 +6,7 @@ type Props = {
   size?: string;
 };
 
-export const Spinner: FC<Props> = ({ color, size }) => {
+export function Spinner({ color, size }: Props) {
   return (
     <span role="status">
       <svg
@@ -35,4 +35,4 @@ export const Spinner: FC<Props> = ({ color, size }) => {
       </svg>
     </span>
   );
-};
+}
