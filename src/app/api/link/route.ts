@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
+import { AppId } from "@/app/types";
 import { AppManifest } from "@/data";
 import { fetchAllApps } from "@/data/storage";
-import { AppId } from "@/app/types";
 
 export async function POST(req: Request) {
   const res = await req.json();

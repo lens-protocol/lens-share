@@ -6,8 +6,10 @@ import { CheckIcon, ClipboardDocumentIcon } from "@heroicons/react/24/solid";
 import { debounce } from "lodash";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { AppId } from "./types";
+
 import { Spinner } from "@/components/Spinner";
+
+import { AppId } from "./types";
 
 const isValidURL = (url: string) => {
   return url.startsWith("https://") || url.startsWith("http://");
@@ -140,11 +142,11 @@ export default async function Home() {
         {!isLinkGood && link.length > 20 ? (
           <div className="w-full">
             <p className="text-lg">
-              We are sorry we couldn't build a Lens Share Link at this time.
+              {"We are sorry we couldn't build a Lens Share Link at this time."}
             </p>
 
             <p className="opacity-90 mt-2">
-              You can however build it manually adopting one of these patterns:
+              {"You can however build it manually adopting one of these patterns:"}
             </p>
 
             <p className="opacity-80 mt-2">https://share.lens.xyz/u/</p>
