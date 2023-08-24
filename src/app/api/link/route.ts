@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { AppManifest } from "@/data";
 import { fetchAllApps } from "@/data/storage";
-
+import { AppId } from "@/app/types";
 
 export async function POST(req: Request) {
   const res = await req.json();
@@ -24,7 +24,7 @@ const SHARE_PUBLICATION_URL = "https://share.lens.xyz/p/";
 function determineLinkTypeForApp(
   link: string,
   manifest: AppManifest
-): { type: "profile" | "publication" | "unknown"; url?: string } {
+): { type: "profile" | "publication" | "unknown"; url?: string; by?: AppId } {
   const profileUrl = manifest.routes.profile?.url;
   const publicationUrl = manifest.routes.publication?.url;
 
@@ -34,7 +34,7 @@ function determineLinkTypeForApp(
     const profileMatch = profileRegex.exec(link);
     if (profileMatch) {
       const customProfileUrl = SHARE_PROFILE_URL + profileMatch[1];
-      return { type: "profile", url: customProfileUrl };
+      return { type: "profile", url: customProfileUrl, by: manifest.appId };
     }
   }
 
@@ -44,7 +44,7 @@ function determineLinkTypeForApp(
     const publicationMatch = publicationIdRegex.exec(link);
     if (publicationMatch) {
       const customPublicationUrl = SHARE_PUBLICATION_URL + publicationMatch[1];
-      return { type: "publication", url: customPublicationUrl };
+      return { type: "publication", url: customPublicationUrl, by: manifest.appId };
     }
   }
 
