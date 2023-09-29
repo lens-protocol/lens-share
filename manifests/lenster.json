@@ -1,21 +1,21 @@
 {
-  "appId": "lenster",
-  "name": "Lenster",
-  "description": "Lenster is a composable, decentralized, and permission-less social media web app built with Lens Protocol 🌿",
+  "appId": "Hey",
+  "name": "Hey",
+  "description": "Hey is a composable, decentralized, and permission-less social media web app built with Lens Protocol 🌿",
   "platform": "web",
   "icon": {
-    "url": "https://lenster.xyz/logo.svg",
+    "url": "https://hey.xyz/logo.png",
     "background": "#000"
   },
   "routes": {
-    "home": "https://lenster.xyz/",
+    "home": "https://Hey.xyz/",
     "profile": {
-      "url": "https://lenster.xyz/u/:handle"
+      "url": "https://Hey.xyz/u/:handle"
     },
     "publication": {
-      "url": "https://lenster.xyz/posts/:id",
+      "url": "https://Hey.xyz/posts/:id",
       "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
     }
   },
-  "twitter": "lensterxyz"
+  "twitter": "heydotxyz"
 }

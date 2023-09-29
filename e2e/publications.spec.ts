@@ -13,7 +13,7 @@ test.describe("Given a Publication link", async () => {
         "Buttrfly",
         "Collectz",
         "Lensta",
-        "Lenster",
+        "Hey",
         "Soclly",
       ]);
     });
@@ -87,25 +87,25 @@ test.describe("Given a Publication link posted on a social media website/app", a
     test("Then it should mention the originating app in page `title` and Open Graph `site_name` tag", async ({
       textPost,
     }) => {
-      await textPost.openAsSharedBy("lenster");
+      await textPost.openAsSharedBy("Hey");
 
-      expect(await textPost.getTitle()).toContain("Lenster");
+      expect(await textPost.getTitle()).toContain("Hey");
       expect(await textPost.extractOpenGraphProperties()).toMatchObject({
-        "og:site_name": "Lenster",
+        "og:site_name": "Hey",
       });
     });
 
     test("Then it should mention the originating app in Twitter Card `site` if a Twitter handle is provided in the app manifest", async ({
       textPost,
     }) => {
-      await textPost.openAsSharedBy("lenster");
+      await textPost.openAsSharedBy("Hey");
 
-      expect(await textPost.getTitle()).toContain("Lenster");
+      expect(await textPost.getTitle()).toContain("Hey");
       expect(await textPost.extractOpenGraphProperties()).toMatchObject({
-        "og:site_name": "Lenster",
+        "og:site_name": "Hey",
       });
       expect(await textPost.extractTwitterMetaTags()).toMatchObject({
-        "twitter:site": "lensterxyz",
+        "twitter:site": "Heyxyz",
       });
     });
   });
@@ -121,7 +121,7 @@ test.describe("Given a Video Publication link", async () => {
       await expect(videoPost.options).toHaveText([
         "Buttrfly",
         "Collectz",
-        "Lenster",
+        "Hey",
         "Lenstube",
         "Soclly",
       ]);
@@ -138,7 +138,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
         "Lenstube",
         "Buttrfly",
         "Collectz",
-        "Lenster",
+        "Hey",
         "Soclly",
       ]);
     });
@@ -159,20 +159,20 @@ test.describe("Given an opened Publication link", async () => {
   test.describe("When submitting an app choice", async () => {
     test("Then it should open the publication with the selected app", async ({ textPost }) => {
       await textPost.open();
-      const url = await textPost.justOnce("Lenster");
+      const url = await textPost.justOnce("Hey");
 
-      await expect(url).toMatch(`https://lenster.xyz/posts/${textPost.publicationId}`);
+      await expect(url).toMatch(`https://Hey.xyz/posts/${textPost.publicationId}`);
     });
   });
 
   test.describe("When submitting an app choice with 'Remember' checkbox selected", async () => {
     test("Then it should use the same app for all future publications", async ({ textPost }) => {
       await textPost.open();
-      await textPost.remember("Lenster");
+      await textPost.remember("Hey");
 
       const response = await textPost.open();
 
-      await expect(response?.url()).toMatch(`https://lenster.xyz/posts/${textPost.publicationId}`);
+      await expect(response?.url()).toMatch(`https://Hey.xyz/posts/${textPost.publicationId}`);
     });
   });
 });

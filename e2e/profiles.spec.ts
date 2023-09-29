@@ -14,7 +14,7 @@ test.describe("Given a Profile link", async () => {
         "Collectz",
         "LensFrens",
         "Lensta",
-        "Lenster",
+        "Hey",
         "Lenstube",
         "Riff",
         "Soclly",
@@ -55,25 +55,25 @@ test.describe("Given a Publication link posted on a social media website/app", a
     test("Then it should mention the originating app in page `title` and Open Graph `site_name` tag", async ({
       anyProfile,
     }) => {
-      await anyProfile.openAsSharedBy("lenster");
+      await anyProfile.openAsSharedBy("Hey");
 
-      expect(await anyProfile.getTitle()).toContain("Lenster");
+      expect(await anyProfile.getTitle()).toContain("Hey");
       expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
-        "og:site_name": "Lenster",
+        "og:site_name": "Hey",
       });
     });
 
     test("Then it should mention the originating app in Twitter Card `site` if a Twitter handle is provided in the app manifest", async ({
       anyProfile,
     }) => {
-      await anyProfile.openAsSharedBy("lenster");
+      await anyProfile.openAsSharedBy("Hey");
 
-      expect(await anyProfile.getTitle()).toContain("Lenster");
+      expect(await anyProfile.getTitle()).toContain("Hey");
       expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
-        "og:site_name": "Lenster",
+        "og:site_name": "Hey",
       });
       expect(await anyProfile.extractTwitterMetaTags()).toMatchObject({
-        "twitter:site": "lensterxyz",
+        "twitter:site": "Heyxyz",
       });
     });
   });
@@ -82,10 +82,10 @@ test.describe("Given a Publication link posted on a social media website/app", a
 test.describe("Given a Profile link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
     test("Then it should show the specified app first", async ({ anyProfile }) => {
-      await anyProfile.openAsSharedBy("lenster");
+      await anyProfile.openAsSharedBy("Hey");
 
       await expect(anyProfile.options).toHaveText([
-        "Lenster",
+        "Hey",
         "Buttrfly",
         "Collectz",
         "LensFrens",
@@ -112,20 +112,20 @@ test.describe("Given an opened Profile link", async () => {
   test.describe("When submitting an app choice", async () => {
     test("Then it should open the publication with the selected app", async ({ anyProfile }) => {
       await anyProfile.open();
-      const url = await anyProfile.justOnce("Lenster");
+      const url = await anyProfile.justOnce("Hey");
 
-      await expect(url).toMatch(`https://lenster.xyz/u/${anyProfile.handle}`);
+      await expect(url).toMatch(`https://Hey.xyz/u/${anyProfile.handle}`);
     });
   });
 
   test.describe("When submitting an app choice with 'Remember' checkbox selected", async () => {
     test("Then it should use the same app for all future publications", async ({ anyProfile }) => {
       await anyProfile.open();
-      await anyProfile.remember("Lenster");
+      await anyProfile.remember("Hey");
 
       const response = await anyProfile.open();
 
-      await expect(response?.url()).toMatch(`https://lenster.xyz/u/${anyProfile.handle}`);
+      await expect(response?.url()).toMatch(`https://Hey.xyz/u/${anyProfile.handle}`);
     });
   });
 });
