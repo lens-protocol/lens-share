@@ -8,12 +8,12 @@
     "background": "#000"
   },
   "routes": {
-    "home": "https://Hey.xyz/",
+    "home": "https://hey.xyz/",
     "profile": {
-      "url": "https://Hey.xyz/u/:handle"
+      "url": "https://hey.xyz/u/:handle"
     },
     "publication": {
-      "url": "https://Hey.xyz/posts/:id",
+      "url": "https://hey.xyz/posts/:id",
       "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
     }
   },
