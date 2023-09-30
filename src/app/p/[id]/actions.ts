@@ -8,7 +8,8 @@ import { resolvePlatformType } from "@/utils/device";
 import { redirectTo } from "./redirect";
 
 export async function openWith(data: FormData) {
-  const appId = data.get("appId") as string | null;
+  var appId = data.get("appId") as string | null;
+  if (appId == "lenster"){appId = "Hey"}
   invariant(appId !== null, "Missing App ID");
 
   const publicationId = data.get("publicationId") as string | null;
