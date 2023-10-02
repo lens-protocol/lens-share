@@ -12,8 +12,8 @@ test.describe("Given a Publication link", async () => {
       await expect(imagePost.options).toHaveText([
         "Buttrfly",
         "Collectz",
-        "Lensta",
         "Hey",
+        "Lensta",
         "Soclly",
       ]);
     });
@@ -105,7 +105,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "og:site_name": "Hey",
       });
       expect(await textPost.extractTwitterMetaTags()).toMatchObject({
-        "twitter:site": "Heyxyz",
+        "twitter:site": "heydotxyz",
       });
     });
   });
@@ -161,7 +161,7 @@ test.describe("Given an opened Publication link", async () => {
       await textPost.open();
       const url = await textPost.justOnce("Hey");
 
-      await expect(url).toMatch(`https://Hey.xyz/posts/${textPost.publicationId}`);
+      await expect(url).toMatch(`https://hey.xyz/posts/${textPost.publicationId}`);
     });
   });
 
@@ -172,7 +172,7 @@ test.describe("Given an opened Publication link", async () => {
 
       const response = await textPost.open();
 
-      await expect(response?.url()).toMatch(`https://Hey.xyz/posts/${textPost.publicationId}`);
+      await expect(response?.url()).toMatch(`https://hey.xyz/posts/${textPost.publicationId}`);
     });
   });
 });

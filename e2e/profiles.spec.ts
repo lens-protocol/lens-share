@@ -12,9 +12,9 @@ test.describe("Given a Profile link", async () => {
       await expect(anyProfile.options).toHaveText([
         "Buttrfly",
         "Collectz",
+        "Hey",
         "LensFrens",
         "Lensta",
-        "Hey",
         "Lenstube",
         "Riff",
         "Soclly",
@@ -30,7 +30,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
 
       expect(await anyProfile.extractOpenGraphProperties()).toMatchObject({
         "og:title": `@${anyProfile.handle} profile`,
-        "og:description": "The Social Layer of Web3 🌿",
+        "og:description": "The Social Layer for Web3 🌿",
         "og:url": expect.stringContaining(`/u/${anyProfile.handle}`),
         "og:site_name": "Lens Share",
         "og:type": "profile",
@@ -44,7 +44,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "twitter:card": "summary_large_image",
         "twitter:site": "LensProtocol",
         "twitter:title": `@${anyProfile.handle} profile`,
-        "twitter:description": "The Social Layer of Web3 🌿",
+        "twitter:description": "The Social Layer for Web3 🌿",
         "twitter:image": expect.any(String),
         "twitter:image:type": "image/png",
       });
@@ -73,7 +73,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
         "og:site_name": "Hey",
       });
       expect(await anyProfile.extractTwitterMetaTags()).toMatchObject({
-        "twitter:site": "Heyxyz",
+        "twitter:site": "heydotxyz",
       });
     });
   });
@@ -114,7 +114,7 @@ test.describe("Given an opened Profile link", async () => {
       await anyProfile.open();
       const url = await anyProfile.justOnce("Hey");
 
-      await expect(url).toMatch(`https://Hey.xyz/u/${anyProfile.handle}`);
+      await expect(url).toMatch(`https://hey.xyz/u/${anyProfile.handle}`);
     });
   });
 
@@ -125,7 +125,7 @@ test.describe("Given an opened Profile link", async () => {
 
       const response = await anyProfile.open();
 
-      await expect(response?.url()).toMatch(`https://Hey.xyz/u/${anyProfile.handle}`);
+      await expect(response?.url()).toMatch(`https://hey.xyz/u/${anyProfile.handle}`);
     });
   });
 });
