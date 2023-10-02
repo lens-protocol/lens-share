@@ -1,0 +1,21 @@
+{
+  "appId": "Hey",
+  "name": "Hey",
+  "description": "Hey is a composable, decentralized, and permission-less social media web app built with Lens Protocol 🌿",
+  "platform": "web",
+  "icon": {
+    "url": "https://hey.xyz/logo.png",
+    "background": "#000"
+  },
+  "routes": {
+    "home": "https://hey.xyz/",
+    "profile": {
+      "url": "https://hey.xyz/u/:handle"
+    },
+    "publication": {
+      "url": "https://hey.xyz/posts/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
+  },
+  "twitter": "heydotxyz"
+}

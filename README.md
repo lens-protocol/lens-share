@@ -43,7 +43,7 @@ Where:
 Some examples:
 
 - `https://share.lens.xyz/p/0x01`
-- `https://share.lens.xyz/p/0x01?by=lenster`
+- `https://share.lens.xyz/p/0x01?by=hey`
 - `https://share.lens.xyz/p/0x01?by=orb`
 
 ### Profile Lens Share Link
@@ -62,7 +62,7 @@ Where:
 Some examples:
 
 - `https://share.lens.xyz/u/alice.lens`
-- `https://share.lens.xyz/u/alice.lens?by=lenster`
+- `https://share.lens.xyz/u/alice.lens?by=Hey`
 
 ## Lens Share UI
 
