@@ -122,7 +122,7 @@ test.describe("Given a Video Publication link", async () => {
         "Buttrfly",
         "Collectz",
         "Hey",
-        "Lenstube",
+        "Tape",
         "Soclly",
       ]);
     });
@@ -132,10 +132,10 @@ test.describe("Given a Video Publication link", async () => {
 test.describe("Given a Publication link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
     test("Then it should show the specified app first", async ({ videoPost }) => {
-      await videoPost.openAsSharedBy("lenstube");
+      await videoPost.openAsSharedBy("tape");
 
       await expect(videoPost.options).toHaveText([
-        "Lenstube",
+        "Tape",
         "Buttrfly",
         "Collectz",
         "Hey",

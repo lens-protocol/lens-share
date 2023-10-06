@@ -1,19 +1,19 @@
 {
-  "appId": "lenstube",
-  "name": "Lenstube",
-  "description": "Lenstube is a decentralized video-sharing social media platform built with Lens protocol.",
+  "appId": "Tape",
+  "name": "Tape",
+  "description": "Tape is a decentralized video-sharing social media platform built with Lens protocol.",
   "platform": "web",
   "icon": {
-    "url": "https://static.lenstube.xyz/images/brand/lenstube.svg",
+    "url": "https://static.tape.xyz/brand/logo.svg",
     "background": "#15192c"
   },
   "routes": {
-    "home": "https://lenstube.xyz/",
+    "home": "https://tape.xyz/",
     "profile": {
-      "url": "https://lenstube.xyz/channel/:handle"
+      "url": "https://tape.xyz/channel/:handle"
     },
     "publication": {
-      "url": "https://lenstube.xyz/watch/:id",
+      "url": "https://tape.xyz/watch/:id",
       "supports": ["VIDEO"]
     }
   }

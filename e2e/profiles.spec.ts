@@ -15,7 +15,7 @@ test.describe("Given a Profile link", async () => {
         "Hey",
         "LensFrens",
         "Lensta",
-        "Lenstube",
+        "Tape",
         "Riff",
         "Soclly",
       ]);
@@ -90,7 +90,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
         "Collectz",
         "LensFrens",
         "Lensta",
-        "Lenstube",
+        "Tape",
         "Riff",
         "Soclly",
       ]);
