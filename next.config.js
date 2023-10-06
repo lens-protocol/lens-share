@@ -42,7 +42,7 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: "/u/:handle",
+        source: "/channel/:handle",
         has: [
           {
             type: "query",
