@@ -1,0 +1,20 @@
+{
+  "appId": "tape",
+  "name": "Tape",
+  "description": "Talk, Amplify, Post, Explore.",
+  "platform": "web",
+  "icon": {
+    "url": "https://static.tape.xyz/brand/logo.svg",
+    "background": "#15192c"
+  },
+  "routes": {
+    "home": "https://tape.xyz/",
+    "profile": {
+      "url": "https://tape.xyz/channel/:handle"
+    },
+    "publication": {
+      "url": "https://tape.xyz/watch/:id",
+      "supports": ["VIDEO"]
+    }
+  }
+}
