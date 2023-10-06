@@ -38,7 +38,7 @@ const nextConfig = {
             value: "Lenstube",
           },
         ],
-        destination: "/p/:id?by=Tape",
+        destination: "/p/:id?by=tape",
         permanent: false,
       },
       {
@@ -50,7 +50,7 @@ const nextConfig = {
             value: "Lenstube",
           },
         ],
-        destination: "/u/:handle?by=Tape",
+        destination: "/u/:handle?by=tape",
         permanent: false,
       },
     ];
