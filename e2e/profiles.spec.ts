@@ -15,9 +15,9 @@ test.describe("Given a Profile link", async () => {
         "Hey",
         "LensFrens",
         "Lensta",
-        "Tape",
         "Riff",
         "Soclly",
+        "Tape"
       ]);
     });
   });
@@ -90,9 +90,9 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
         "Collectz",
         "LensFrens",
         "Lensta",
-        "Tape",
         "Riff",
         "Soclly",
+        "Tape",
       ]);
     });
   });
