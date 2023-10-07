@@ -132,14 +132,14 @@ test.describe("Given a Video Publication link", async () => {
 test.describe("Given a Publication link with `by` attribution param", async () => {
   test.describe("When opening it", async () => {
     test("Then it should show the specified app first", async ({ videoPost }) => {
-      await videoPost.openAsSharedBy("Tape");
+      await videoPost.openAsSharedBy("tape");
 
       await expect(videoPost.options).toHaveText([
+        "Tape",
         "Buttrfly",
         "Collectz",
         "Hey",
         "Soclly",
-        "Tape",
       ]);
     });
   });
