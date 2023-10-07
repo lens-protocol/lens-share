@@ -30,7 +30,7 @@ const nextConfig = {
         permanent: false,
       },
       {
-        source: "/watch/:id",
+        source: "/p/:id",
         has: [
           {
             type: "query",
@@ -38,11 +38,11 @@ const nextConfig = {
             value: "lenstube",
           },
         ],
-        destination: "/watch/:id?by=tape",
+        destination: "/p/:id?by=tape",
         permanent: false,
       },
       {
-        source: "/channel/:handle",
+        source: "/u/:handle",
         has: [
           {
             type: "query",
@@ -50,7 +50,7 @@ const nextConfig = {
             value: "lenstube",
           },
         ],
-        destination: "/channel/:handle?by=tape",
+        destination: "/u/:handle?by=tape",
         permanent: false,
       },
     ];
