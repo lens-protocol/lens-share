@@ -29,6 +29,30 @@ const nextConfig = {
         destination: "/u/:handle?by=Hey",
         permanent: false,
       },
+      {
+        source: "/p/:id",
+        has: [
+          {
+            type: "query",
+            key: "by",
+            value: "lenstube",
+          },
+        ],
+        destination: "/p/:id?by=tape",
+        permanent: false,
+      },
+      {
+        source: "/u/:handle",
+        has: [
+          {
+            type: "query",
+            key: "by",
+            value: "lenstube",
+          },
+        ],
+        destination: "/u/:handle?by=tape",
+        permanent: false,
+      },
     ];
   },
 };
