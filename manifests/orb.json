@@ -1,7 +1,7 @@
 {
   "appId": "orb",
-  "name": "Orb",
-  "description": "Decentralized professional social media app with an end-to-end on-chain credibility system; connecting companies, projects, and people; built with Lens protocol on Polygon chain.",
+  "name": "orb",
+  "description": "Everyday app for web3 social. A community-focused social app for people to connect, interact, and transact in their daily lives on web3 built with Lens Protocol.",
   "platform": "mobile",
   "icon": {
     "url": "https://orb.ac/assets/orb-logo-white.png",
