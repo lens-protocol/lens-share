@@ -1,0 +1,20 @@
+{
+  "appId": "orb",
+  "name": "orb",
+  "description": "Everyday app for web3 social. A community-focused social app for people to connect, interact, and transact in their daily lives on web3 built with Lens Protocol.",
+  "platform": "web",
+  "icon": {
+    "url": "https://orb.ac/assets/orb-logo-white.png",
+    "background": "#181818"
+  },
+  "routes": {
+    "home": "https://orb.ac/",
+    "profile": {
+      "url": "https://orb.ac/@:handle"
+    },
+    "publication": {
+      "url": "https://orb.ac/post/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
+  }
+}
