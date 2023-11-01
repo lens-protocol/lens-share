@@ -51,18 +51,18 @@ Some examples:
 The Lens Share Link format is:
 
 ```
-https://share.lens.xyz/u/<handle>[?by=<appId>]
+https://share.lens.xyz/u/<fullHandle>[?by=<appId>]
 ```
 
 Where:
 
-- `<handle>` is the profile handle inclusive of the `.lens` suffix but without the `@` prefix (e.g. `alice.lens`, `bob.lens`, etc.).
+- `<fullHandle>` is the profile v2 full handle including the namespace (e.g. `lens/alice`, `lens/bob`, etc.).
 - `<appId>` is an optional parameter that reflect the Lens App ID of the app used to generate the Lens Share Link. This is used to give priority to the app that generated the Lens Share Link when the user opens the Lens Share Link.
 
 Some examples:
 
-- `https://share.lens.xyz/u/alice.lens`
-- `https://share.lens.xyz/u/alice.lens?by=Hey`
+- `https://share.lens.xyz/u/lens/alice`
+- `https://share.lens.xyz/u/lens/alice?by=Hey`
 
 ## Lens Share UI
 
@@ -99,7 +99,7 @@ After cloning the repo, run `pnpm install` to fetch its dependencies. Then you c
 - Fork this repository
 - Install the dependencies with `pnpm install`
 - Add your app manifest to the `manifests` folder
-- Run the app locally with `pnpm dev`. The app is available at `http://localhost:3000/u/<your-handle>.lens`, or `http://localhost:3000/p/<your-publication-id>`
+- Run the app locally with `pnpm dev`. The app is available at `http://localhost:3000/u/<your-full-handle>`, or `http://localhost:3000/p/<your-publication-id>`
 - Test thoroughly your configuration by:
   - opening Lens Share links with web and mobile browser and verify your app shows in the list as expected
   - opening Lens Share links with `?by=<your-app-id>` parameter to verify your app is prioritized as expected

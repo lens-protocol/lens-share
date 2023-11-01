@@ -53,6 +53,12 @@ const nextConfig = {
         destination: "/u/:handle?by=tape",
         permanent: false,
       },
+      // v1 to v2 handle redirect
+      {
+        source: "/u/:handle",
+        destination: "/u/lens/:handle",
+        permanent: false,
+      },
     ];
   },
 };

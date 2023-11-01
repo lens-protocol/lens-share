@@ -1,4 +1,4 @@
-import { PublicationMainFocus } from "@lens-protocol/client";
+import { PublicationMetadataMainFocusType } from "@lens-protocol/client";
 import { z } from "zod";
 import { zodToJsonSchema } from "zod-to-json-schema";
 
@@ -21,7 +21,7 @@ const ProfileUrlSchema = z.object(
     url: z
       .string({
         description:
-          "The `:handle` placeholder will be replaced with the full profile handle inclusive of `.lens` suffix when relevant (e.g. `lensapi.lens`, `lensprotocol`).",
+          "The `:handle` placeholder will be replaced with the profile's full handle, including namespace (e.g. `namespace/lensapi`, `namespace/lensprotocol`).",
       })
       .url()
       .includes(":handle"),
@@ -31,7 +31,7 @@ const ProfileUrlSchema = z.object(
   }
 );
 
-const PublicationMainFocusSchema = z.nativeEnum(PublicationMainFocus, {
+const PublicationMainFocusSchema = z.nativeEnum(PublicationMetadataMainFocusType, {
   description: "Publication main focus. Matches Publication Metadata spec.",
 });
 
