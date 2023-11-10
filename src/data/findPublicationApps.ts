@@ -1,7 +1,8 @@
-import { PublicationFragment, PublicationMainFocus } from "@lens-protocol/client";
+import { AnyPublicationFragment, PublicationMetadataFragment } from "@lens-protocol/client";
 import { Overwrite } from "@lens-protocol/shared-kernel";
 
 import { AppId, PlatformType, RouteKind } from "@/app/types";
+import { publicationMetadataToMainFocusType } from "@/utils/metadata";
 
 import { AppManifest } from "./AppManifestSchema";
 import { byMobilePlatformFirst, withPriorityTo } from "./comparators";
@@ -25,22 +26,24 @@ function supportsPublicationRoute(app: AppManifest): app is WithPublicationRoute
 }
 
 function resolvePublicationMainContentFocus(
-  publication: PublicationFragment
-): PublicationMainFocus {
+  publication: AnyPublicationFragment
+): PublicationMetadataFragment {
   if (publication.__typename === "Mirror") {
-    return publication.mirrorOf.metadata.mainContentFocus;
+    return publication.mirrorOn.metadata;
   }
-  return publication.metadata.mainContentFocus;
+  return publication.metadata;
 }
 
 type FetchRelevantAppsRequest = {
-  publication: PublicationFragment;
+  publication: AnyPublicationFragment;
 };
 
 async function fetchRelevantApps(request: FetchRelevantAppsRequest): Promise<Array<AppManifest>> {
   const apps = await fetchAllApps();
 
-  const mainContentFocus = resolvePublicationMainContentFocus(request.publication);
+  const mainContentFocus = publicationMetadataToMainFocusType(
+    resolvePublicationMainContentFocus(request.publication)
+  );
 
   return apps.filter(
     (app) =>
@@ -50,7 +53,7 @@ async function fetchRelevantApps(request: FetchRelevantAppsRequest): Promise<Arr
 
 export type FindPublicationAppsRequest = {
   platform: PlatformType;
-  publication: PublicationFragment;
+  publication: AnyPublicationFragment;
   priorityTo?: AppId;
 };
 

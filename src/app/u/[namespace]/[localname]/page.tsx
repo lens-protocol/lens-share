@@ -1,4 +1,5 @@
 import { ProfileFragment } from "@lens-protocol/client";
+import { never } from "@lens-protocol/shared-kernel";
 import truncateMarkdown from "markdown-truncate";
 import { ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
@@ -10,6 +11,7 @@ import { twitterHandle } from "@/config";
 import { AppManifest, findApp, findFavoriteApp, findProfileApps } from "@/data";
 import { formatProfileHandle } from "@/formatters";
 import { resolvePlatformType } from "@/utils/device";
+import { getFullHandle } from "@/utils/handle";
 import { resolveAttribution } from "@/utils/request";
 
 import { openWith } from "./actions";
@@ -17,22 +19,25 @@ import { redirectTo } from "./redirect";
 
 export type ProfilePageProps = {
   params: {
-    handle: string;
+    namespace: string;
+    localname: string;
   };
   searchParams: SearchParams;
 };
 
 export default async function ProfilePage({ params, searchParams }: ProfilePageProps) {
   const platform = resolvePlatformType();
-  const profile = await client.profile.fetch({ handle: params.handle });
+  const fullHandle = getFullHandle(params.namespace, params.localname);
+  const profile = await client.profile.fetch({ forHandle: fullHandle });
 
   const favoriteApp = await findFavoriteApp({ platform });
 
   if (favoriteApp) {
-    redirectTo(favoriteApp, params.handle);
+    redirectTo(favoriteApp, fullHandle);
   }
 
   if (!profile) notFound();
+  if (!profile.handle) never();
 
   const attribution = searchParams.by ? await findApp({ appId: searchParams.by, platform }) : null;
 
@@ -43,7 +48,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
   return (
     <form action={openWith}>
-      <input type="hidden" name="handle" value={profile.handle} />
+      <input type="hidden" name="handle" value={profile.handle.fullHandle} />
 
       <AppsList attribution={attribution} options={options} />
     </form>
@@ -52,14 +57,14 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
 function formatPageTitle(profile: ProfileFragment, attribution: AppManifest | null) {
   if (attribution) {
-    return `${formatProfileHandle(profile.handle)} profile  • ${attribution.name}`;
+    return `${formatProfileHandle(profile)} profile  • ${attribution.name}`;
   }
-  return `${formatProfileHandle(profile.handle)} profile`;
+  return `${formatProfileHandle(profile)} profile`;
 }
 
 function formatPageDescription(profile: ProfileFragment) {
-  return profile.bio
-    ? truncateMarkdown(profile.bio, {
+  return profile.metadata?.bio
+    ? truncateMarkdown(profile.metadata?.bio, {
         limit: 100,
         ellipsis: true,
       })
@@ -70,9 +75,11 @@ export async function generateMetadata(
   { params, searchParams }: ProfilePageProps,
   parent: ResolvingMetadata
 ) {
-  const profile = await client.profile.fetch({ handle: params.handle });
+  const fullHandle = getFullHandle(params.namespace, params.localname);
+  const profile = await client.profile.fetch({ forHandle: fullHandle });
 
   if (!profile) notFound();
+  if (!profile.handle) never();
 
   const attribution = await resolveAttribution(searchParams);
 
@@ -89,7 +96,7 @@ export async function generateMetadata(
     openGraph: {
       title,
       description,
-      url: `/u/${profile.handle}`,
+      url: `/u/${profile.handle.fullHandle}`,
       type: "profile",
       siteName,
     },
