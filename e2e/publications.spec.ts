@@ -26,7 +26,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
       await textPost.open();
 
       expect(await textPost.extractOpenGraphProperties()).toEqual({
-        "og:title": "Post by @stani.lens",
+        "og:title": "Post by lens/stani",
         "og:description": "This post will age well.",
         "og:url": expect.stringContaining(`/p/${textPost.publicationId}`),
         "og:site_name": "Lens Share",
@@ -42,7 +42,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
       expect(await textPost.extractTwitterMetaTags()).toEqual({
         "twitter:card": "summary",
         "twitter:site": "LensProtocol",
-        "twitter:title": "Post by @stani.lens",
+        "twitter:title": "Post by lens/stani",
         "twitter:description": "This post will age well.",
       });
     });
@@ -53,8 +53,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
       await imagePost.open();
 
       expect(await imagePost.extractOpenGraphProperties()).toMatchObject({
-        "og:image":
-          "https://ipfs-2.thirdwebcdn.com/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
+        "og:image": "https://gw.ipfs-lens.dev/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
         "og:image:type": "image/jpeg",
       });
     });
@@ -67,7 +66,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
       expect(await imagePost.extractTwitterMetaTags()).toMatchObject({
         "twitter:card": "summary_large_image",
         "twitter:image":
-          "https://ipfs-2.thirdwebcdn.com/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
+          "https://gw.ipfs-lens.dev/ipfs/QmRxDD6oxyWxtTyJoq52C1nUfuWiA5HiseJwksAXPz24BF",
       });
     });
   });
@@ -78,7 +77,7 @@ test.describe("Given a Publication link posted on a social media website/app", a
 
       expect(await videoPost.extractOpenGraphProperties()).toMatchObject({
         "og:image":
-          "https://ipfs-2.thirdwebcdn.com/ipfs/bafybeib7o45x6oesq4ziwdatncakvvwqkp6wvur5b45od4fm6gbcbjmce4",
+          "https://gw.ipfs-lens.dev/ipfs/bafybeib7o45x6oesq4ziwdatncakvvwqkp6wvur5b45od4fm6gbcbjmce4",
       });
     });
   });
@@ -118,13 +117,7 @@ test.describe("Given a Video Publication link", async () => {
     }) => {
       await videoPost.open();
 
-      await expect(videoPost.options).toHaveText([
-        "Buttrfly",
-        "Collectz",
-        "Hey",
-        "Soclly",
-        "Tape",
-      ]);
+      await expect(videoPost.options).toHaveText(["Buttrfly", "Collectz", "Hey", "Soclly", "Tape"]);
     });
   });
 });
@@ -134,13 +127,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show the specified app first", async ({ videoPost }) => {
       await videoPost.openAsSharedBy("tape");
 
-      await expect(videoPost.options).toHaveText([
-        "Tape",
-        "Buttrfly",
-        "Collectz",
-        "Hey",
-        "Soclly",
-      ]);
+      await expect(videoPost.options).toHaveText(["Tape", "Buttrfly", "Collectz", "Hey", "Soclly"]);
     });
   });
 

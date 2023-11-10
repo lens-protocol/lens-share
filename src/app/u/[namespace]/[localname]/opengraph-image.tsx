@@ -1,6 +1,11 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
-import { ProfileFragment } from "@lens-protocol/client";
+import {
+  NftImageFragment,
+  ProfileCoverSetFragment,
+  ProfileFragment,
+  ProfilePictureSetFragment,
+} from "@lens-protocol/client";
 import { assertError } from "@lens-protocol/shared-kernel";
 import { notFound } from "next/navigation";
 import { ImageResponse } from "next/server";
@@ -8,38 +13,53 @@ import { ImageResponse } from "next/server";
 import { client } from "@/app/client";
 import { gintoNordMediumData } from "@/app/fonts";
 import { formatProfileHandle } from "@/formatters";
+import { getFullHandle } from "@/utils/handle";
 import { resolveMediaUrl } from "@/utils/media";
 
 export type ImageProps = {
   params: {
-    handle: string;
+    namespace: string;
+    localname: string;
   };
 };
 
-type ProfileMedia = NonNullable<ProfileFragment["picture"]>;
+type ProfileMetadataPicture = ProfilePictureSetFragment | NftImageFragment | null;
 
-function resolveProfileMedia(media: ProfileMedia | null) {
+function resolveProfileMetadataPicture(media: ProfileMetadataPicture) {
   if (media === null) {
     return null;
   }
 
   if (media.__typename === "NftImage") {
-    return resolveMediaUrl(media.uri);
+    return resolveMediaUrl(resolveProfilePictureSet(media.image));
   }
 
-  return resolveMediaUrl(media.original.url);
+  return resolveMediaUrl(resolveProfilePictureSet(media));
+}
+
+function resolveProfileMetadataCover(media: ProfileCoverSetFragment | null) {
+  if (media === null) {
+    return null;
+  }
+
+  return resolveMediaUrl(resolveProfilePictureSet(media));
+}
+
+function resolveProfilePictureSet(imageSet: ProfilePictureSetFragment | ProfileCoverSetFragment) {
+  return imageSet.optimized?.uri ?? imageSet.raw.uri;
 }
 
 function resolveCoverImage(profile: ProfileFragment) {
-  return resolveProfileMedia(profile.coverPicture);
+  return resolveProfileMetadataCover(profile.metadata?.coverPicture || null);
 }
 
 function resolveProfileImage(profile: ProfileFragment) {
-  return resolveProfileMedia(profile.picture);
+  return resolveProfileMetadataPicture(profile.metadata?.picture || null);
 }
 
 export default async function Image({ params }: ImageProps) {
-  const profile = await client.profile.fetch({ handle: params.handle });
+  const fullHandle = getFullHandle(params.namespace, params.localname);
+  const profile = await client.profile.fetch({ forHandle: fullHandle });
 
   if (!profile) notFound();
 
@@ -63,10 +83,12 @@ export default async function Image({ params }: ImageProps) {
               </div>
             </div>
             <p tw="flex leading-none text-stone-400 text-[32px] font-normal align-middle">
-              {formatProfileHandle(profile.handle)}
+              {formatProfileHandle(profile)}
             </p>
-            {profile.name && (
-              <p tw="flex leading-none text-white text-[48px] font-bold">{profile.name}</p>
+            {profile.metadata?.displayName && (
+              <p tw="flex leading-none text-white text-[48px] font-bold">
+                {profile.metadata?.displayName}
+              </p>
             )}
           </div>
         </div>

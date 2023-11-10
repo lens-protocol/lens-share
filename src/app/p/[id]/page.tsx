@@ -1,4 +1,4 @@
-import { MediaSetFragment, MetadataFragment, PublicationFragment } from "@lens-protocol/client";
+import { PublicationMetadataFragment, AnyPublicationFragment } from "@lens-protocol/client";
 import truncateMarkdown from "markdown-truncate";
 import { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
@@ -10,7 +10,6 @@ import { twitterHandle } from "@/config";
 import { findPublicationApps, findFavoriteApp, AppManifest } from "@/data";
 import { formatProfileHandle } from "@/formatters";
 import { resolvePlatformType } from "@/utils/device";
-import { isImageType } from "@/utils/media";
 import { OGImageDescriptor, mediaToOpenGraphImage } from "@/utils/metadata";
 import { resolveAttribution } from "@/utils/request";
 
@@ -26,7 +25,7 @@ export type PublicationPageProps = {
 
 export default async function PublicationPage({ params, searchParams }: PublicationPageProps) {
   const platform = resolvePlatformType();
-  const publication = await client.publication.fetch({ publicationId: params.id });
+  const publication = await client.publication.fetch({ forId: params.id });
 
   const favoriteApp = await findFavoriteApp({ platform });
 
@@ -53,54 +52,77 @@ export default async function PublicationPage({ params, searchParams }: Publicat
   );
 }
 
-function resolveMetadata(publication: PublicationFragment): MetadataFragment {
+function resolveMetadata(publication: AnyPublicationFragment): PublicationMetadataFragment {
   if (publication.__typename === "Mirror") {
-    return publication.mirrorOf.metadata;
+    return publication.mirrorOn.metadata;
   }
   return publication.metadata;
 }
 
-function formatPageDescription(metadata: MetadataFragment) {
-  return metadata.content
-    ? truncateMarkdown(metadata.content, {
+function formatPageDescription(metadata: PublicationMetadataFragment) {
+  switch (metadata.__typename) {
+    case "ArticleMetadataV3":
+    case "AudioMetadataV3":
+    case "CheckingInMetadataV3":
+    case "EmbedMetadataV3":
+    case "ImageMetadataV3":
+    case "LinkMetadataV3":
+    case "LiveStreamMetadataV3":
+    case "MintMetadataV3":
+    case "SpaceMetadataV3":
+    case "StoryMetadataV3":
+    case "TextOnlyMetadataV3":
+    case "ThreeDMetadataV3":
+    case "TransactionMetadataV3":
+    case "VideoMetadataV3":
+      return truncateMarkdown(metadata.content, {
         limit: 100,
         ellipsis: true,
-      })
-    : undefined;
+      });
+    case "EventMetadataV3":
+      return undefined;
+  }
 }
 
-function formatPageTitle(publication: PublicationFragment, attribution: AppManifest | null) {
+function formatPageTitle(publication: AnyPublicationFragment, attribution: AppManifest | null) {
   if (attribution) {
-    return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)} on ${
+    return `${publication.__typename} by ${formatProfileHandle(publication.by)} on ${
       attribution.name
     }`;
   }
-  return `${publication.__typename} by ${formatProfileHandle(publication.profile.handle)}`;
+  return `${publication.__typename} by ${formatProfileHandle(publication.by)}`;
 }
 
-function isImageMediaSet(media: MediaSetFragment) {
-  return media.original.mimeType && isImageType(media.original.mimeType);
-}
-
-function isMediaWithCoverImage(media: MediaSetFragment) {
-  return media.original.cover !== null;
-}
-
-async function extractImage(metadata: MetadataFragment): Promise<OGImageDescriptor | null> {
-  const media = metadata.media.find(
-    (media) => isImageMediaSet(media) || isMediaWithCoverImage(media)
-  );
-
-  if (!media) return null;
-
-  return mediaToOpenGraphImage(media.original);
+async function extractImage(
+  metadata: PublicationMetadataFragment
+): Promise<OGImageDescriptor | null> {
+  switch (metadata.__typename) {
+    case "AudioMetadataV3":
+    case "ImageMetadataV3":
+    case "StoryMetadataV3":
+    case "VideoMetadataV3":
+      return mediaToOpenGraphImage([metadata.asset]); // extract from asset
+    case "ArticleMetadataV3":
+    case "CheckingInMetadataV3":
+    case "EmbedMetadataV3":
+    case "EventMetadataV3":
+    case "LinkMetadataV3":
+    case "LiveStreamMetadataV3":
+    case "MintMetadataV3":
+    case "SpaceMetadataV3":
+    case "ThreeDMetadataV3":
+    case "TransactionMetadataV3":
+      return mediaToOpenGraphImage(metadata.attachments); // extract from attachments
+    case "TextOnlyMetadataV3":
+      return null;
+  }
 }
 
 export async function generateMetadata(
   { params, searchParams }: PublicationPageProps,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const publication = await client.publication.fetch({ publicationId: params.id });
+  const publication = await client.publication.fetch({ forId: params.id });
 
   if (!publication) notFound();
 
