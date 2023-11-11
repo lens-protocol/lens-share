@@ -33,7 +33,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
   const favoriteApp = await findFavoriteApp({ platform });
 
   if (favoriteApp) {
-    redirectTo(favoriteApp, fullHandle);
+    redirectTo(favoriteApp, params.localname);
   }
 
   if (!profile) notFound();
@@ -48,7 +48,7 @@ export default async function ProfilePage({ params, searchParams }: ProfilePageP
 
   return (
     <form action={openWith}>
-      <input type="hidden" name="handle" value={profile.handle.fullHandle} />
+      <input type="hidden" name="handle" value={profile.handle.localName} />
 
       <AppsList attribution={attribution} options={options} />
     </form>
