@@ -1,7 +1,11 @@
 const V1_SUFFIX = ".lens";
 
+export function hasV1Suffix(handle: string): boolean {
+  return handle.endsWith(V1_SUFFIX);
+}
+
 export function removeV1Suffix(handle: string): string {
-  if (handle.endsWith(".lens")) {
+  if (hasV1Suffix(handle)) {
     return handle.slice(0, -V1_SUFFIX.length);
   }
 
