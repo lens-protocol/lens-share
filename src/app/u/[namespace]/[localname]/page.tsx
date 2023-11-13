@@ -2,7 +2,7 @@ import { ProfileFragment } from "@lens-protocol/client";
 import { never } from "@lens-protocol/shared-kernel";
 import truncateMarkdown from "markdown-truncate";
 import { ResolvingMetadata } from "next";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import { client } from "@/app/client";
 import { SearchParams } from "@/app/types";
@@ -11,7 +11,7 @@ import { twitterHandle } from "@/config";
 import { AppManifest, findApp, findFavoriteApp, findProfileApps } from "@/data";
 import { formatProfileHandle } from "@/formatters";
 import { resolvePlatformType } from "@/utils/device";
-import { getFullHandle } from "@/utils/handle";
+import { getFullHandle, hasV1Suffix, removeV1Suffix } from "@/utils/handle";
 import { resolveAttribution } from "@/utils/request";
 
 import { openWith } from "./actions";
@@ -27,6 +27,11 @@ export type ProfilePageProps = {
 
 export default async function ProfilePage({ params, searchParams }: ProfilePageProps) {
   const platform = resolvePlatformType();
+
+  if (hasV1Suffix(params.localname)) {
+    redirect(`/u/${params.namespace}/${removeV1Suffix(params.localname)}`);
+  }
+
   const fullHandle = getFullHandle(params.namespace, params.localname);
   const profile = await client.profile.fetch({ forHandle: fullHandle });
 
