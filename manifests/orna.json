@@ -1,0 +1,21 @@
+{
+  "appId": "orna.art",
+  "name": "Orna",
+  "description": "Lens collects, people and communities",
+  "platform": "web",
+  "icon": {
+    "url": "https://bitcloutweb.azureedge.net/public/lens/images/Icon_round250OrnaFullTiny.png",
+    "background": "#000"
+  },
+  "routes": {
+    "home": "https://orna.art/",
+    "profile": {
+      "url": "https://orna.art/u/:handle"
+    },
+    "publication": {
+      "url": "https://orna.art/c/:id",
+      "supports": ["IMAGE","AUDIO","VIDEO","THREED"]
+    }
+  },
+  "twitter": "nftz_me"
+}
