@@ -13,7 +13,7 @@ const AppIdSchema: z.Schema<AppId, z.ZodTypeDef, string> = z
   })
   .min(3)
   .max(16)
-  .regex(/^[a-z0-9]+$/i)
+  .regex(/^[a-z0-9.]+$/i)
   .transform((value) => value as AppId);
 
 const ProfileUrlSchema = z.object(

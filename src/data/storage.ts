@@ -34,6 +34,7 @@ async function readAllManifestFiles(): Promise<Result<AppManifest, Error>[]> {
 
         return success(manifest);
       } catch (e) {
+        console.log(e);
         assertError(e);
         return failure(e);
       }

@@ -79,7 +79,7 @@ const nextConfig = {
       },
       // v1 to v2 handle redirect
       {
-        source: "/u/:handle",
+        source: "/u/:handle.lens",
         destination: "/u/lens/:handle",
         permanent: false,
       },

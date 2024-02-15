@@ -14,7 +14,7 @@
     },
     "publication": {
       "url": "https://orna.art/c/:id",
-      "supports": ["IMAGE", "AUDIO", "VIDEO", "THREED"]
+      "supports": ["IMAGE", "AUDIO", "VIDEO", "THREE_D"]
     }
   },
   "twitter": "nftz_me"
