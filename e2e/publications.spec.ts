@@ -9,13 +9,7 @@ test.describe("Given a Publication link", async () => {
     test("Then it should show relevant app options", async ({ imagePost }) => {
       await imagePost.open();
 
-      await expect(imagePost.options).toHaveText([
-        "Buttrfly",
-        "Collectz",
-        "Hey",
-        "Lensta",
-        "Soclly",
-      ]);
+      await expect(imagePost.options).toHaveText(["Buttrfly", "Hey", "Lensta", "Orna", "Soclly"]);
     });
   });
 });

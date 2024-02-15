@@ -53,6 +53,30 @@ const nextConfig = {
         destination: "/u/:handle?by=tape",
         permanent: false,
       },
+      {
+        source: "/p/:id",
+        has: [
+          {
+            type: "query",
+            key: "by",
+            value: "collectz",
+          },
+        ],
+        destination: "/p/:id?by=orna.art",
+        permanent: false,
+      },
+      {
+        source: "/u/:handle",
+        has: [
+          {
+            type: "query",
+            key: "by",
+            value: "collectz",
+          },
+        ],
+        destination: "/u/:handle?by=orna.art",
+        permanent: false,
+      },
       // v1 to v2 handle redirect
       {
         source: "/u/:handle",
