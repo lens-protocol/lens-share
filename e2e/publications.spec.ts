@@ -129,9 +129,9 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show a message an attribution message before offering other options", async ({
       videoPost,
     }) => {
-      await videoPost.openAsSharedBy("orb");
+      await videoPost.openAsSharedBy("phaver");
 
-      await expect(videoPost.context).toHaveText("Shared via Orb mobile app.");
+      await expect(videoPost.context).toHaveText("Shared via Phaver.");
     });
   });
 });

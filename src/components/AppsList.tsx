@@ -26,8 +26,8 @@ export function AppsList({ attribution, options }: AppsListProps) {
               target="_blank"
             >
               {attribution.name}
-            </a>{" "}
-            mobile app.
+            </a>
+            .
           </p>
         )}
 

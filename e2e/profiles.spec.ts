@@ -163,9 +163,9 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
     test("Then it should show a message an attribution message before offering other options", async ({
       v1Profile,
     }) => {
-      await v1Profile.openAsSharedBy("orb");
+      await v1Profile.openAsSharedBy("phaver");
 
-      await expect(v1Profile.context).toHaveText("Shared via Orb mobile app.");
+      await expect(v1Profile.context).toHaveText("Shared via Phaver.");
     });
   });
 });
