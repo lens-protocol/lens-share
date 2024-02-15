@@ -9,13 +9,7 @@ test.describe("Given a Publication link", async () => {
     test("Then it should show relevant app options", async ({ imagePost }) => {
       await imagePost.open();
 
-      await expect(imagePost.options).toHaveText([
-        "Buttrfly",
-        "Collectz",
-        "Hey",
-        "Lensta",
-        "Soclly",
-      ]);
+      await expect(imagePost.options).toHaveText(["Buttrfly", "Hey", "orb", "Orna", "Soclly"]);
     });
   });
 });
@@ -117,7 +111,14 @@ test.describe("Given a Video Publication link", async () => {
     }) => {
       await videoPost.open();
 
-      await expect(videoPost.options).toHaveText(["Buttrfly", "Collectz", "Hey", "Soclly", "Tape"]);
+      await expect(videoPost.options).toHaveText([
+        "Buttrfly",
+        "Hey",
+        "orb",
+        "Orna",
+        "Soclly",
+        "Tape",
+      ]);
     });
   });
 });
@@ -127,7 +128,14 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show the specified app first", async ({ videoPost }) => {
       await videoPost.openAsSharedBy("tape");
 
-      await expect(videoPost.options).toHaveText(["Tape", "Buttrfly", "Collectz", "Hey", "Soclly"]);
+      await expect(videoPost.options).toHaveText([
+        "Tape",
+        "Buttrfly",
+        "Hey",
+        "orb",
+        "Orna",
+        "Soclly",
+      ]);
     });
   });
 
@@ -135,9 +143,9 @@ test.describe("Given a Publication link with `by` attribution param", async () =
     test("Then it should show a message an attribution message before offering other options", async ({
       videoPost,
     }) => {
-      await videoPost.openAsSharedBy("orb");
+      await videoPost.openAsSharedBy("phaver");
 
-      await expect(videoPost.context).toHaveText("Shared via Orb mobile app.");
+      await expect(videoPost.context).toHaveText("Shared via Phaver.");
     });
   });
 });

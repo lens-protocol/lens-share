@@ -24,7 +24,6 @@ export async function findProfileApps(
       .filter((app) => webOnly(app) && supportsProfileRoute(app))
       .sort(withPriorityTo(request.priorityTo));
   }
-
   return apps
     .filter(supportsProfileRoute)
     .sort(byMobilePlatformFirst)
