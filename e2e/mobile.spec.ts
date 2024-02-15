@@ -9,7 +9,7 @@ test.describe("Given a mobile browser", async () => {
     test("Then it should show in order mobile and web apps options", async ({ textPost }) => {
       await textPost.open();
 
-      await expect(textPost.options).toHaveText(["Buttrfly", "Orb", "Hey", "Lensta", "Soclly"]);
+      await expect(textPost.options).toHaveText(["Buttrfly", "Orb", "Hey", "Soclly"]);
     });
   });
 });
