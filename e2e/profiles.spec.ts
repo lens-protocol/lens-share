@@ -14,6 +14,7 @@ test.describe("Given a Profile link", async () => {
         "Hey",
         "orb",
         "Orna",
+        "Pingpad",
         "Riff",
         "Soclly",
         "Tape",
@@ -29,7 +30,7 @@ test.describe("Given a Profile link posted on a social media website/app", async
 
       expect(await lensProfile.extractOpenGraphProperties()).toMatchObject({
         "og:title": `${lensProfile.handle} profile`,
-        "og:description": "onchain social",
+        "og:description": "An open social network.",
         "og:url": expect.stringContaining(`/u/${lensProfile.handle}`),
         "og:site_name": "Lens Share",
         "og:type": "profile",
@@ -43,7 +44,7 @@ test.describe("Given a Profile link posted on a social media website/app", async
         "twitter:card": "summary_large_image",
         "twitter:site": "LensProtocol",
         "twitter:title": `${lensProfile.handle} profile`,
-        "twitter:description": "onchain social",
+        "twitter:description": "An open social network.",
         "twitter:image": expect.any(String),
         "twitter:image:type": "image/png",
       });
@@ -86,6 +87,7 @@ test.describe("Given a Profile link with `by` attribution param", async () => {
         "Buttrfly",
         "orb",
         "Orna",
+        "Pingpad",
         "Riff",
         "Soclly",
         "Tape",

@@ -28,33 +28,21 @@ export function Navigation() {
 
             <div className="flex flex-col h-full justify-between items-stretch text-darkForest">
               <div className="flex flex-col justify-start gap-6 items-start text-2xl">
-                <NavLink href="https://www.lens.xyz/community">Community</NavLink>
-
-                <NavLink href="https://www.lens.xyz/creators">Creators</NavLink>
-
-                <NavLink href="https://www.lens.xyz/build">Devs</NavLink>
-
-                <NavLink href="https://www.lens.xyz/social-layer">Web3</NavLink>
+                <NavLink href="https://www.lens.xyz/docs">Docs</NavLink>
               </div>
 
-              <NavButton size="lg" variant="dark" href="https://claim.lens.xyz/">
-                Claim handle
+              <NavButton size="lg" variant="dark" href="https://www.lens.xyz">
+                Mint a Handle
               </NavButton>
             </div>
           </section>
         </div>
 
         <div className="hidden sm:flex flex-row gap-8 justify-between items-center text-lightForest text-sm">
-          <NavLink href="https://www.lens.xyz/community">Community</NavLink>
+          <NavLink href="https://www.lens.xyz/docs">Docs</NavLink>
 
-          <NavLink href="https://www.lens.xyz/creators">Creators</NavLink>
-
-          <NavLink href="https://www.lens.xyz/build">Devs</NavLink>
-
-          <NavLink href="https://www.lens.xyz/social-layer">Web3</NavLink>
-
-          <NavButton size="md" variant="light" href="https://claim.lens.xyz/">
-            Claim handle
+          <NavButton size="md" variant="light" href="https://www.lens.xyz">
+            Mint a Handle
           </NavButton>
         </div>
       </div>

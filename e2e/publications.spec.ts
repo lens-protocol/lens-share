@@ -9,7 +9,14 @@ test.describe("Given a Publication link", async () => {
     test("Then it should show relevant app options", async ({ imagePost }) => {
       await imagePost.open();
 
-      await expect(imagePost.options).toHaveText(["Buttrfly", "Hey", "orb", "Orna", "Soclly"]);
+      await expect(imagePost.options).toHaveText([
+        "Buttrfly",
+        "Hey",
+        "orb",
+        "Orna",
+        "Pingpad",
+        "Soclly",
+      ]);
     });
   });
 });
@@ -116,6 +123,7 @@ test.describe("Given a Video Publication link", async () => {
         "Hey",
         "orb",
         "Orna",
+        "Pingpad",
         "Soclly",
         "Tape",
       ]);
@@ -134,6 +142,7 @@ test.describe("Given a Publication link with `by` attribution param", async () =
         "Hey",
         "orb",
         "Orna",
+        "Pingpad",
         "Soclly",
       ]);
     });
