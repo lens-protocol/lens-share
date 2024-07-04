@@ -1,0 +1,20 @@
+{
+  "appId": "ping",
+  "name": "Pingpad",
+  "description": "minimalistic decentralized social",
+  "platform": "web",
+  "icon": {
+    "url": "https://pingpad.io/logo.png",
+    "background": "#292929"
+  },
+  "routes": {
+    "home": "https://pingpad.io/home",
+    "profile": {
+      "url": "https://pingpad.io/u/:handle"
+    },
+    "publication": {
+      "url": "https://pingpad.io/p/:id",
+      "supports": ["ARTICLE", "AUDIO", "EMBED", "IMAGE", "LINK", "TEXT_ONLY", "VIDEO"]
+    }
+  }
+}
